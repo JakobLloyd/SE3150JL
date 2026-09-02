@@ -1,0 +1,50 @@
+"Calling move() advances the tram exactly ne station and never moves it beyond etier end station"
+"When the tram reaches an end station, its direction revorses before its next movement"
+"When the doors are locked, calling open() has no effect"
+"When the doors are locked, calling close() has no effect"
+"Before the train moves the doors must be in the locked state"
+"Emergency button stops movment and unlocks doors"
+"Open button opens the doors (as long as the doors are not locked)"
+"Close button closes the doors during a reset state"
+"getLocation() returns the current location of the tram - a number betwee 1 and 1000"
+"If getLocation returns a number out of bounds, throw error"
+"If emergency stop is engaged, When system reset occurs tram will continue in its current direction to closest station"
+"Tram always stops at a station"
+"time spent in stopped state at a station is configureable"
+"When a train stops at a station doors are unlocked and opened"
+"Before a train starts to move from a station, doors are closed and locked"
+"When doors are 'locked' they can't be opened by pushing the open button"
+"If doors are forced open, it enters emergency state"
+"Reset button lives on main console"
+"Reset sets Emergency to False once all doors are closed manually, moves to next station"
+"List of stops is configureable"
+"Arrive and depart control speed of tram at stops"
+"Stations have an arrival message which plays on arrival"
+"Brakes engage when intended_speed < current_speed"
+"Emergency state engages brakes"
+"Reset state test brakes"
+"Emergency state can be engaged remotely"
+"Operator can use console to manually stop and start the tram"
+"Operator can use console to open/close doors"
+"Operator can rest the system"
+
+
+"Operator can override tram with manual controls, activates emergency"
+
+To Do:
+Handle the removal of a stop
+Handle loops
+Handle multiple trams
+
+
+States:
+In_Mostion: True | False
+Door_State: Open | Closed | locked
+Location: integer 1-1000
+Direction: North | South
+Emergency: True | False
+Message: String
+Reset: True | False
+Current_Speed: 0-100
+Intended_speed: 0-100
+Brakes: True | False
