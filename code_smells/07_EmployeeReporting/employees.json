@@ -1,0 +1,33 @@
+[
+  {
+    "name": "Ana Martinez",
+    "department": "Sales",
+    "job_title": "Account Manager",
+    "salary": 72000
+  },
+  {
+    "name": "Ben Wilson",
+    "department": "Engineering",
+    "job_title": "Software Engineer",
+    "salary": 118000
+  },
+  {
+    "name": "Chao Li",
+    "department": "Sales",
+    "job_title": "Sales Analyst",
+    "salary": 81000
+  },
+  {
+    "name": "Divya Patel",
+    "department": "Human Resources",
+    "job_title": "HR Director",
+    "salary": 105000
+  },
+  {
+    "name": "Evan Brooks",
+    "department": "Engineering",
+    "job_title": "Engineering Manager",
+    "salary": 142000
+  }
+]
+
