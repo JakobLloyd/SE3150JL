@@ -140,3 +140,8 @@ def describe_tram():
         tram = Tram()
         tram.emergency_stop()
         assert tram.brakes is True
+
+    def it_tests_brakes_during_reset():
+        tram = Tram()
+        tram.begin_reset()
+        assert tram.brakes is True
