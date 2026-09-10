@@ -126,3 +126,4 @@ class Tram:
                 index -= 1
         self.location = self.stops[index]
         self.in_motion = False
+        self.current_speed = 0
