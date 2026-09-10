@@ -34,8 +34,12 @@ class Elevator:
             self.close_doors()
             return
         destination = self.destinations[0]
-        self.direction = "Up" if destination > self.floor else "Down"
-        self.floor += 1 if destination > self.floor else -1
+        if destination > self.floor:
+            self.direction = "Up"
+            self.floor += 1
+        else:
+            self.direction = "Down"
+            self.floor -= 1
         if self.floor == destination:
             self.destinations.pop(0)
             self.direction = "Idle"
