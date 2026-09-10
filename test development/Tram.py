@@ -1,9 +1,9 @@
 class Tram:
-    def __init__(self, stops=None, location=1, direction="North"):
+    def __init__(self, stops=None, location=1, direction="North", door_state="Locked"):
         self.stops = list(stops or [1, 500, 1000])
         self.location = location
         self.direction = direction
-        self.door_state = "Locked"
+        self.door_state = door_state
         self.in_motion = False
 
     def start(self):
