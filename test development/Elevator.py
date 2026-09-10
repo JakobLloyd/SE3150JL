@@ -59,3 +59,8 @@ class Elevator:
         if count < 0 or count > self.passengers:
             raise ValueError("invalid passenger count")
         self.passengers -= count
+
+    def emergency_stop(self):
+        self.emergency = True
+        self.destinations.clear()
+        self.direction = "Idle"
