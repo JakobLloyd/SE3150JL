@@ -64,3 +64,6 @@ def describe_tram():
     def it_uses_the_configured_station_stop_time():
         tram = Tram(stop_time=7)
         assert tram.stop_time == 7
+
+    def it_accepts_a_configured_list_of_stops():
+        assert Tram(stops=[2, 8, 20]).stops == [2, 8, 20]
