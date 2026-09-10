@@ -1,10 +1,8 @@
 import pytest
-from pytest_describe import describe
 
 from Tram import Tram
 
 
-@describe
 def describe_tram():
     def it_moves_one_station_north():
         tram = Tram(stops=[1, 500, 1000], location=1, direction="North")
