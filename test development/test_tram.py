@@ -29,3 +29,8 @@ def describe_tram():
         tram.move()
         assert tram.direction == "North"
         assert tram.location == 500
+
+    def it_does_not_open_locked_doors():
+        tram = Tram()
+        tram.open()
+        assert tram.door_state == "Locked"
