@@ -46,3 +46,10 @@ def describe_tram():
         tram.start()
         tram.move()
         assert tram.location == 1
+
+    def it_stops_and_unlocks_doors_when_emergency_is_pressed():
+        tram = Tram()
+        tram.start()
+        tram.emergency_stop()
+        assert tram.in_motion is False
+        assert tram.door_state == "Unlocked"
