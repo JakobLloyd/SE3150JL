@@ -49,6 +49,9 @@ class Tram:
     def manual_stop(self):
         self.stop()
 
+    def manual_override(self):
+        self.emergency_stop()
+
     def open(self):
         if self.door_state == "Unlocked":
             self.door_state = "Open"
