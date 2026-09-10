@@ -45,6 +45,8 @@ class Elevator:
         self.doors = "Closed"
 
     def board(self, count=1):
+        if count < 0:
+            raise ValueError("passenger count cannot be negative")
         if self.doors != "Open":
             raise RuntimeError("doors must be open")
         if self.passengers + count > self.capacity:
