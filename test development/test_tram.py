@@ -56,3 +56,7 @@ def describe_tram():
 
     def it_reports_a_valid_location():
         assert Tram(location=500).get_location() == 500
+
+    def it_rejects_an_invalid_location():
+        with pytest.raises(ValueError):
+            Tram(location=1001)
