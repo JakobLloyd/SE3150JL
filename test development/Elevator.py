@@ -29,3 +29,4 @@ class Elevator:
         if self.floor == destination:
             self.destinations.pop(0)
             self.direction = "Idle"
+            self.doors = "Open"
