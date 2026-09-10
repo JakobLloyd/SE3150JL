@@ -67,3 +67,8 @@ def describe_tram():
 
     def it_accepts_a_configured_list_of_stops():
         assert Tram(stops=[2, 8, 20]).stops == [2, 8, 20]
+
+    def it_removes_a_configured_stop():
+        tram = Tram(stops=[1, 500, 1000])
+        tram.remove_stop(500)
+        assert tram.stops == [1, 1000]
