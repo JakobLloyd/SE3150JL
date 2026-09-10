@@ -18,6 +18,8 @@ def describe_elevator():
             "floor": 1,
             "direction": "Idle",
             "doors": "Closed",
+            "passengers": 0,
+            "emergency": False,
         }
 
     def it_accepts_a_valid_destination():
