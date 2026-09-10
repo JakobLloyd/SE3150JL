@@ -19,3 +19,10 @@ class Elevator:
     def request(self, floor):
         if floor != self.floor:
             self.destinations.append(floor)
+
+    def step(self):
+        if not self.destinations:
+            return
+        destination = self.destinations[0]
+        self.direction = "Up" if destination > self.floor else "Down"
+        self.floor += 1 if destination > self.floor else -1
