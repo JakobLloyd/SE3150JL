@@ -122,3 +122,9 @@ def describe_elevator():
         elevator.emergency_stop()
         with pytest.raises(RuntimeError):
             elevator.request(2)
+
+    def it_resets_emergency_when_stopped():
+        elevator = Elevator()
+        elevator.emergency_stop()
+        elevator.reset()
+        assert elevator.emergency is False
