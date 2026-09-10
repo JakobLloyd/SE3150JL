@@ -99,3 +99,9 @@ def describe_tram():
         tram.lock_doors()
         tram.start()
         assert tram.door_state == "Locked"
+
+    def it_closes_open_doors_during_reset():
+        tram = Tram(door_state="Open")
+        tram.begin_reset()
+        tram.close()
+        assert tram.door_state == "Closed"
