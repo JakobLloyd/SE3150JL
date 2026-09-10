@@ -69,6 +69,7 @@ class Tram:
 
     def begin_reset(self):
         self.reset = True
+        self.brakes = True
 
     def close(self):
         if self.door_state == "Open" and self.reset:
