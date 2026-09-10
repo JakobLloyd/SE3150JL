@@ -111,3 +111,8 @@ def describe_elevator():
         elevator = Elevator()
         elevator.emergency_stop()
         assert elevator.emergency is True
+
+    def it_opens_doors_when_emergency_is_idle():
+        elevator = Elevator()
+        elevator.emergency_stop()
+        assert elevator.doors == "Open"
