@@ -88,3 +88,8 @@ def describe_tram():
         fleet.add("south", south_tram)
         assert fleet.get("north") is north_tram
         assert fleet.get("south") is south_tram
+
+    def it_opens_doors_at_a_station():
+        tram = Tram(door_state="Locked")
+        tram.arrive()
+        assert tram.door_state == "Open"
