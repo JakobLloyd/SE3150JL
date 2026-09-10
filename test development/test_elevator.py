@@ -116,3 +116,9 @@ def describe_elevator():
         elevator = Elevator()
         elevator.emergency_stop()
         assert elevator.doors == "Open"
+
+    def it_rejects_destinations_during_emergency():
+        elevator = Elevator()
+        elevator.emergency_stop()
+        with pytest.raises(RuntimeError):
+            elevator.request(2)
