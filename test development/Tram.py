@@ -13,6 +13,8 @@ class Tram:
         if not self.in_motion or self.door_state != "Locked":
             return
         index = self.stops.index(self.location)
-        step = 1 if self.direction == "North" else -1
-        self.location = self.stops[index + step]
+        if self.direction == "North":
+            self.location = self.stops[index + 1]
+        else:
+            self.location = self.stops[index - 1]
         self.in_motion = False
