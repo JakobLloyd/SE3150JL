@@ -77,3 +77,9 @@ def describe_elevator():
         elevator.open_doors()
         elevator.board(2)
         assert elevator.passengers == 2
+
+    def it_rejects_over_capacity_boarding():
+        elevator = Elevator(capacity=2)
+        elevator.open_doors()
+        with pytest.raises(ValueError):
+            elevator.board(3)
