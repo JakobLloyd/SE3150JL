@@ -1,3 +1,14 @@
+class TramFleet:
+    def __init__(self):
+        self._trams = {}
+
+    def add(self, name, tram):
+        self._trams[name] = tram
+
+    def get(self, name):
+        return self._trams[name]
+
+
 class Tram:
     def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5, loop=False):
         if location < 1 or location > 1000:
