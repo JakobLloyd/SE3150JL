@@ -12,6 +12,17 @@ class Console:
         self._tram.begin_reset()
 
 
+class TramFleet:
+    def __init__(self):
+        self._trams = {}
+
+    def add(self, name, tram):
+        self._trams[name] = tram
+
+    def get(self, name):
+        return self._trams[name]
+
+
 class Tram:
     def __init__(self, stops=None, location=1, direction="North", door_state="Locked",
                  current_speed=0, intended_speed=0, stop_time=5, departure_speed=20,
