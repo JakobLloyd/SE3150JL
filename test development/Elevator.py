@@ -52,3 +52,10 @@ class Elevator:
         if self.passengers + count > self.capacity:
             raise ValueError("capacity exceeded")
         self.passengers += count
+
+    def exit(self, count=1):
+        if self.doors != "Open":
+            raise RuntimeError("doors must be open")
+        if count < 0 or count > self.passengers:
+            raise ValueError("invalid passenger count")
+        self.passengers -= count
