@@ -130,3 +130,8 @@ def describe_tram():
         tram = Tram(departure_speed=30)
         tram.start()
         assert tram.intended_speed == 30
+
+    def it_engages_brakes_when_speed_must_decrease():
+        tram = Tram(current_speed=40, intended_speed=20)
+        tram.update_brakes()
+        assert tram.brakes is True
