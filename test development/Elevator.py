@@ -64,3 +64,4 @@ class Elevator:
         self.emergency = True
         self.destinations.clear()
         self.direction = "Idle"
+        self.doors = "Open"
