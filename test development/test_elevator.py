@@ -71,3 +71,9 @@ def describe_elevator():
     def it_rejects_a_floor_above_three():
         with pytest.raises(ValueError):
             Elevator().request(4)
+
+    def it_accepts_passengers_when_doors_are_open():
+        elevator = Elevator()
+        elevator.open_doors()
+        elevator.board(2)
+        assert elevator.passengers == 2
