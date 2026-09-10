@@ -161,3 +161,10 @@ def describe_elevator():
         elevator.close_doors()
         elevator.step()
         assert elevator.floor == 3
+
+    def it_stops_moving_in_emergency_mode():
+        elevator = Elevator()
+        elevator.request(3)
+        elevator.emergency = True
+        elevator.step()
+        assert elevator.floor == 1
