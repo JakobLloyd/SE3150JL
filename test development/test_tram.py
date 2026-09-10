@@ -190,6 +190,11 @@ def describe_tram():
         tram = Tram()
         assert callable(tram.console.reset)
 
+    def it_allows_the_operator_to_reset_the_system():
+        tram = Tram()
+        tram.console.reset()
+        assert tram.reset is True
+
     def it_activates_emergency_when_manual_override_is_used():
         tram = Tram()
         tram.manual_override()
