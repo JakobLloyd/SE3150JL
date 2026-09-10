@@ -146,3 +146,9 @@ def describe_elevator():
         elevator.request(1)
         elevator.step()
         assert elevator.floor == 2
+
+    def it_queues_multiple_destinations():
+        elevator = Elevator()
+        elevator.request(2)
+        elevator.request(3)
+        assert elevator.destinations == [2, 3]
