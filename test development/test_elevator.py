@@ -106,3 +106,8 @@ def describe_elevator():
         elevator.request(2)
         elevator.step()
         assert elevator.floor == 1
+
+    def it_enters_emergency_mode():
+        elevator = Elevator()
+        elevator.emergency_stop()
+        assert elevator.emergency is True
