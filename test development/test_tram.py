@@ -156,3 +156,8 @@ def describe_tram():
     def it_exposes_reset_on_the_console():
         tram = Tram()
         assert callable(tram.console.reset)
+
+    def it_activates_emergency_when_manual_override_is_used():
+        tram = Tram()
+        tram.manual_override()
+        assert tram.emergency is True
