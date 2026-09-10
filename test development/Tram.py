@@ -18,6 +18,7 @@ class Tram:
         self.direction = direction
         self.door_state = door_state
         self.in_motion = False
+        self.emergency = False
         self.stop_time = stop_time
         self.loop = loop
 
@@ -31,10 +32,14 @@ class Tram:
     def emergency_stop(self):
         self.in_motion = False
         self.door_state = "Unlocked"
+        self.emergency = True
 
     def force_open_doors(self):
         self.door_state = "Open"
         self.emergency = True
+
+    def remote_emergency(self):
+        self.emergency_stop()
 
     def get_location(self):
         return self.location
