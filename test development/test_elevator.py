@@ -19,3 +19,8 @@ def describe_elevator():
             "direction": "Idle",
             "doors": "Closed",
         }
+
+    def it_accepts_a_valid_destination():
+        elevator = Elevator()
+        elevator.request(3)
+        assert elevator.destinations == [3]
