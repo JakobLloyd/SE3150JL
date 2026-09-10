@@ -32,7 +32,7 @@ class Elevator:
         if self.emergency or self.passengers > self.capacity or not self.destinations:
             return
         if self.doors == "Open":
-            self.close_doors()
+            self.doors = "Closed"
             return
         destination = self.destinations[0]
         if destination > self.floor:
