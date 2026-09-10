@@ -53,3 +53,6 @@ def describe_tram():
         tram.emergency_stop()
         assert tram.in_motion is False
         assert tram.door_state == "Unlocked"
+
+    def it_reports_a_valid_location():
+        assert Tram(location=500).get_location() == 500
