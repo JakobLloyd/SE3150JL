@@ -63,3 +63,7 @@ def describe_elevator():
         elevator.request(2)
         elevator.request(2)
         assert elevator.destinations == [2]
+
+    def it_rejects_a_floor_below_one():
+        with pytest.raises(ValueError):
+            Elevator().request(0)
