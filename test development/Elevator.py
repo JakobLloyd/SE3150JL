@@ -24,7 +24,7 @@ class Elevator:
             self.destinations.append(floor)
 
     def step(self):
-        if not self.destinations:
+        if self.passengers > self.capacity or not self.destinations:
             return
         if self.doors == "Open":
             self.close_doors()
