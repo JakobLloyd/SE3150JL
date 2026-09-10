@@ -115,3 +115,8 @@ def describe_tram():
         tram = Tram()
         tram.remote_emergency()
         assert tram.emergency is True
+
+    def it_arrives_at_zero_speed():
+        tram = Tram(current_speed=40)
+        tram.arrive()
+        assert tram.current_speed == 0
