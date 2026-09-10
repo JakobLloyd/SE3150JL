@@ -4,12 +4,16 @@ class Elevator:
         self.direction = "Idle"
         self.doors = "Closed"
         self.destinations = []
+        self.passengers = 0
+        self.emergency = False
 
     def state(self):
         return {
             "floor": self.floor,
             "direction": self.direction,
             "doors": self.doors,
+            "passengers": self.passengers,
+            "emergency": self.emergency,
         }
 
     def request(self, floor):
