@@ -57,3 +57,9 @@ def describe_elevator():
         elevator.request(2)
         elevator.step()
         assert elevator.doors == "Closed"
+
+    def it_ignores_duplicate_destinations():
+        elevator = Elevator()
+        elevator.request(2)
+        elevator.request(2)
+        assert elevator.destinations == [2]
