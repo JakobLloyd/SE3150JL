@@ -23,6 +23,9 @@ class Elevator:
     def step(self):
         if not self.destinations:
             return
+        if self.doors == "Open":
+            self.close_doors()
+            return
         destination = self.destinations[0]
         self.direction = "Up" if destination > self.floor else "Down"
         self.floor += 1 if destination > self.floor else -1
@@ -30,3 +33,10 @@ class Elevator:
             self.destinations.pop(0)
             self.direction = "Idle"
             self.doors = "Open"
+
+    def open_doors(self):
+        if self.direction == "Idle":
+            self.doors = "Open"
+
+    def close_doors(self):
+        self.doors = "Closed"
