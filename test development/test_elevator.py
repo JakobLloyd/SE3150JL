@@ -83,3 +83,9 @@ def describe_elevator():
         elevator.open_doors()
         with pytest.raises(ValueError):
             elevator.board(3)
+
+    def it_rejects_negative_boarding_counts():
+        elevator = Elevator()
+        elevator.open_doors()
+        with pytest.raises(ValueError):
+            elevator.board(-1)
