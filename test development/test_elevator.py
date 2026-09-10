@@ -96,3 +96,13 @@ def describe_elevator():
         elevator.board(2)
         elevator.exit(1)
         assert elevator.passengers == 1
+
+    def it_cannot_move_when_overloaded():
+        elevator = Elevator(capacity=1)
+        elevator.open_doors()
+        elevator.board(1)
+        elevator.passengers = 2
+        elevator.close_doors()
+        elevator.request(2)
+        elevator.step()
+        assert elevator.floor == 1
