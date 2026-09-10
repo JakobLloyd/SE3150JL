@@ -12,3 +12,10 @@ def describe_elevator():
 
     def it_starts_with_closed_doors():
         assert Elevator().doors == "Closed"
+
+    def it_reports_its_state():
+        assert Elevator().state() == {
+            "floor": 1,
+            "direction": "Idle",
+            "doors": "Closed",
+        }
