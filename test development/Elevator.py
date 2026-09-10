@@ -17,7 +17,7 @@ class Elevator:
         }
 
     def request(self, floor):
-        if floor != self.floor:
+        if floor != self.floor and floor not in self.destinations:
             self.destinations.append(floor)
 
     def step(self):
