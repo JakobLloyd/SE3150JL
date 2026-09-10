@@ -46,6 +46,13 @@ class Tram:
         if self.door_state == "Closed":
             self.door_state = "Locked"
 
+    def begin_reset(self):
+        self.reset = True
+
+    def close(self):
+        if self.door_state == "Open" and self.reset:
+            self.door_state = "Closed"
+
     def move(self):
         if not self.in_motion or self.door_state != "Locked":
             return
