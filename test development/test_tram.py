@@ -152,3 +152,7 @@ def describe_tram():
         assert tram.in_motion is True
         tram.manual_stop()
         assert tram.in_motion is False
+
+    def it_exposes_reset_on_the_console():
+        tram = Tram()
+        assert callable(tram.console.reset)
