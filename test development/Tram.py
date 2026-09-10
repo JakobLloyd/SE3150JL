@@ -99,6 +99,8 @@ class Tram:
         self.brakes = True
 
     def close(self):
+        if self.door_state == "Locked":
+            return
         if self.door_state == "Open" and self.reset:
             self.door_state = "Closed"
 
