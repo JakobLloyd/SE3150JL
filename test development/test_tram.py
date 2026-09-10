@@ -120,6 +120,13 @@ def describe_tram():
         tram.move()
         assert tram.location == 1000
 
+    def it_resets_only_after_all_doors_are_closed():
+        tram = Tram(door_state="Open")
+        tram.emergency_stop()
+        tram.begin_reset()
+        tram.reset_system()
+        assert tram.emergency is True
+
     def it_locks_doors_before_departure():
         tram = Tram(door_state="Closed")
         tram.lock_doors()
