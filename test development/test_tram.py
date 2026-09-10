@@ -110,3 +110,8 @@ def describe_tram():
         tram = Tram()
         tram.force_open_doors()
         assert tram.emergency is True
+
+    def it_can_receive_a_remote_emergency_signal():
+        tram = Tram()
+        tram.remote_emergency()
+        assert tram.emergency is True
