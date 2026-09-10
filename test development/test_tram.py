@@ -105,3 +105,8 @@ def describe_tram():
         tram.begin_reset()
         tram.close()
         assert tram.door_state == "Closed"
+
+    def it_enters_emergency_when_doors_are_forced_open():
+        tram = Tram()
+        tram.force_open_doors()
+        assert tram.emergency is True
