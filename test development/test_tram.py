@@ -93,3 +93,9 @@ def describe_tram():
         tram = Tram(door_state="Locked")
         tram.arrive()
         assert tram.door_state == "Open"
+
+    def it_locks_doors_before_departure():
+        tram = Tram(door_state="Closed")
+        tram.lock_doors()
+        tram.start()
+        assert tram.door_state == "Locked"
