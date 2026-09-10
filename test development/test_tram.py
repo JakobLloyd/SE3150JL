@@ -60,3 +60,7 @@ def describe_tram():
     def it_rejects_an_invalid_location():
         with pytest.raises(ValueError):
             Tram(location=1001)
+
+    def it_uses_the_configured_station_stop_time():
+        tram = Tram(stop_time=7)
+        assert tram.stop_time == 7
