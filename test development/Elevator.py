@@ -24,8 +24,9 @@ class Elevator:
             raise ValueError("destination must be 1, 2, or 3")
         if self.emergency:
             raise RuntimeError("elevator is in emergency mode")
-        if floor != self.floor and floor not in self.destinations:
-            self.destinations.append(floor)
+        if floor == self.floor or floor in self.destinations:
+            return
+        self.destinations.append(floor)
 
     def step(self):
         if self.passengers > self.capacity or not self.destinations:
