@@ -140,3 +140,9 @@ def describe_elevator():
 
     def it_accepts_a_valid_starting_floor():
         assert Elevator(floor=3).floor == 3
+
+    def it_moves_down_one_floor_per_step():
+        elevator = Elevator(floor=3)
+        elevator.request(1)
+        elevator.step()
+        assert elevator.floor == 2
