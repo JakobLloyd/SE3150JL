@@ -32,6 +32,9 @@ class Tram:
         self.brakes = False
         self.console = Console(self)
 
+    def remove_stop(self, stop):
+        self.stops.remove(stop)
+
     def get_location(self):
         if not 1 <= self.location <= 1000:
             raise ValueError("location is out of bounds")
