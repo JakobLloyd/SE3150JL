@@ -89,3 +89,10 @@ def describe_elevator():
         elevator.open_doors()
         with pytest.raises(ValueError):
             elevator.board(-1)
+
+    def it_allows_passengers_to_leave_with_open_doors():
+        elevator = Elevator()
+        elevator.open_doors()
+        elevator.board(2)
+        elevator.exit(1)
+        assert elevator.passengers == 1
