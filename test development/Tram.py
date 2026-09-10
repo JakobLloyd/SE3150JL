@@ -22,6 +22,7 @@ class Tram:
         self.stop_time = stop_time
         self.loop = loop
         self.current_speed = current_speed
+        self.message = ""
 
     def start(self):
         self.in_motion = True
@@ -52,6 +53,7 @@ class Tram:
         self.in_motion = False
         self.current_speed = 0
         self.door_state = "Open"
+        self.message = "Arriving at station"
 
     def lock_doors(self):
         if self.door_state == "Closed":
