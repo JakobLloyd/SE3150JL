@@ -9,3 +9,9 @@ def describe_tram():
         tram.start()
         tram.move()
         assert tram.location == 500
+
+    def it_moves_one_station_south():
+        tram = Tram(stops=[1, 500, 1000], location=1000, direction="South")
+        tram.start()
+        tram.move()
+        assert tram.location == 500
