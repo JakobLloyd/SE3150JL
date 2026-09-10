@@ -1,5 +1,7 @@
 class Tram:
     def __init__(self, stops=None, location=1, direction="North", door_state="Locked"):
+        if location < 1 or location > 1000:
+            raise ValueError("location must be between 1 and 1000")
         self.stops = list(stops or [1, 500, 1000])
         self.location = location
         self.direction = direction
