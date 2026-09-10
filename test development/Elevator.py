@@ -1,10 +1,11 @@
 class Elevator:
-    def __init__(self):
+    def __init__(self, capacity=8):
         self.floor = 1
         self.direction = "Idle"
         self.doors = "Closed"
         self.destinations = []
         self.passengers = 0
+        self.capacity = capacity
         self.emergency = False
 
     def state(self):
@@ -46,4 +47,6 @@ class Elevator:
     def board(self, count=1):
         if self.doors != "Open":
             raise RuntimeError("doors must be open")
+        if self.passengers + count > self.capacity:
+            raise ValueError("capacity exceeded")
         self.passengers += count
