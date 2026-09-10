@@ -1,6 +1,8 @@
 class Elevator:
-    def __init__(self, capacity=8):
-        self.floor = 1
+    def __init__(self, floor=1, capacity=8):
+        if floor < 1 or floor > 3:
+            raise ValueError("floor must be 1, 2, or 3")
+        self.floor = floor
         self.direction = "Idle"
         self.doors = "Closed"
         self.destinations = []
