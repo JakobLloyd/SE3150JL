@@ -127,6 +127,13 @@ def describe_tram():
         tram.remove_stop(500)
         assert tram.stops == [1, 1000]
 
+    def it_loops_from_the_last_station_to_the_first():
+        tram = Tram(stops=[1, 500, 1000], location=1000, direction="North", loop=True)
+        tram.start()
+        tram.move()
+        assert tram.location == 1
+        assert tram.direction == "North"
+
     def it_arrives_at_zero_speed():
         tram = Tram(current_speed=40)
         tram.arrive()
