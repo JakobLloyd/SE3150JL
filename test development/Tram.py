@@ -32,6 +32,10 @@ class Tram:
         self.in_motion = False
         self.door_state = "Unlocked"
 
+    def force_open_doors(self):
+        self.door_state = "Open"
+        self.emergency = True
+
     def get_location(self):
         return self.location
 
