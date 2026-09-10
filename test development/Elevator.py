@@ -67,3 +67,7 @@ class Elevator:
         self.destinations.clear()
         self.direction = "Idle"
         self.doors = "Open"
+
+    def reset(self):
+        if self.direction == "Idle":
+            self.emergency = False
