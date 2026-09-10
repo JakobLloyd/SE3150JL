@@ -14,6 +14,7 @@ class Console:
         self._tram = tram
 
     def reset(self):
+        self._tram.reset = True
         self._tram.begin_reset()
 
     def open_doors(self):
