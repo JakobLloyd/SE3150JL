@@ -43,6 +43,8 @@ class Tram:
         self.message = ""
 
     def start(self):
+        if self.door_state == "Closed":
+            self.lock_doors()
         self.in_motion = True
         self.intended_speed = self.departure_speed
 
