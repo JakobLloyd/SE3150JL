@@ -107,10 +107,11 @@ class Tram:
             self.door_state = "Closed"
 
     def reset_system(self):
-        if self.reset and self.door_state == "Closed":
-            self.emergency = False
-            self.brakes = False
-            self.start()
+        if not self.reset or self.door_state != "Closed":
+            return
+        self.emergency = False
+        self.brakes = False
+        self.start()
 
     def move(self):
         if not self.in_motion or self.door_state != "Locked":
