@@ -31,6 +31,15 @@ class Tram:
         self.in_motion = True
         self.intended_speed = self.departure_speed
 
+    def stop(self):
+        self.in_motion = False
+
+    def manual_start(self):
+        self.start()
+
+    def manual_stop(self):
+        self.stop()
+
     def open(self):
         if self.door_state == "Unlocked":
             self.door_state = "Open"
