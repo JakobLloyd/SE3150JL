@@ -20,6 +20,8 @@ class Elevator:
     def request(self, floor):
         if floor < 1 or floor > 3:
             raise ValueError("destination must be 1, 2, or 3")
+        if self.emergency:
+            raise RuntimeError("elevator is in emergency mode")
         if floor != self.floor and floor not in self.destinations:
             self.destinations.append(floor)
 
