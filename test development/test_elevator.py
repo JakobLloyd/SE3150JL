@@ -137,3 +137,6 @@ def describe_elevator():
 
     def it_reports_when_idle():
         assert Elevator().is_idle() is True
+
+    def it_accepts_a_valid_starting_floor():
+        assert Elevator(floor=3).floor == 3
