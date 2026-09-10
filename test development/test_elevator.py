@@ -134,3 +134,6 @@ def describe_elevator():
         elevator.open_doors()
         elevator.board(2)
         assert elevator.is_full() is True
+
+    def it_reports_when_idle():
+        assert Elevator().is_idle() is True
