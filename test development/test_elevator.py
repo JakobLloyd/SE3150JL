@@ -9,3 +9,6 @@ def describe_elevator():
 
     def it_starts_idle():
         assert Elevator().direction == "Idle"
+
+    def it_starts_with_closed_doors():
+        assert Elevator().doors == "Closed"
