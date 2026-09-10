@@ -40,3 +40,9 @@ def describe_tram():
         tram.door_state = "Unlocked"
         tram.open()
         assert tram.door_state == "Open"
+
+    def it_requires_locked_doors_before_moving():
+        tram = Tram(door_state="Open")
+        tram.start()
+        tram.move()
+        assert tram.location == 1
