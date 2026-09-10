@@ -20,6 +20,10 @@ class Tram:
             else:
                 index += 1
         else:
-            index -= 1
+            if index == 0:
+                self.direction = "North"
+                index += 1
+            else:
+                index -= 1
         self.location = self.stops[index]
         self.in_motion = False
