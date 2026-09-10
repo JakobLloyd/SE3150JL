@@ -152,3 +152,12 @@ def describe_elevator():
         elevator.request(2)
         elevator.request(3)
         assert elevator.destinations == [2, 3]
+
+    def it_serves_destinations_in_request_order():
+        elevator = Elevator()
+        elevator.request(2)
+        elevator.request(3)
+        elevator.step()
+        elevator.close_doors()
+        elevator.step()
+        assert elevator.floor == 3
