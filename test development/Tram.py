@@ -13,6 +13,10 @@ class Tram:
         if self.door_state == "Unlocked":
             self.door_state = "Open"
 
+    def emergency_stop(self):
+        self.in_motion = False
+        self.door_state = "Unlocked"
+
     def move(self):
         if not self.in_motion or self.door_state != "Locked":
             return
