@@ -161,3 +161,11 @@ def describe_tram():
         tram = Tram()
         tram.manual_override()
         assert tram.emergency is True
+
+    def it_allows_the_operator_to_control_doors():
+        tram = Tram(door_state="Unlocked")
+        tram.console.open_doors()
+        assert tram.door_state == "Open"
+        tram.begin_reset()
+        tram.console.close_doors()
+        assert tram.door_state == "Closed"
