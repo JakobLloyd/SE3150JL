@@ -44,3 +44,9 @@ def describe_elevator():
         elevator.step()
         assert elevator.floor == 2
         assert elevator.direction == "Idle"
+
+    def it_opens_doors_at_a_destination():
+        elevator = Elevator()
+        elevator.request(2)
+        elevator.step()
+        assert elevator.doors == "Open"
