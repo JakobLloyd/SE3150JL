@@ -50,3 +50,10 @@ def describe_elevator():
         elevator.request(2)
         elevator.step()
         assert elevator.doors == "Open"
+
+    def it_closes_doors_before_moving():
+        elevator = Elevator()
+        elevator.open_doors()
+        elevator.request(2)
+        elevator.step()
+        assert elevator.doors == "Closed"
