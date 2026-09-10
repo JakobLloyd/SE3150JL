@@ -14,7 +14,8 @@ class Console:
 
 class Tram:
     def __init__(self, stops=None, location=1, direction="North", door_state="Locked",
-                 current_speed=0, intended_speed=0, stop_time=5, departure_speed=20):
+                 current_speed=0, intended_speed=0, stop_time=5, departure_speed=20,
+                 loop=False):
         if not 1 <= location <= 1000:
             raise ValueError("location must be between 1 and 1000")
         self.stops = list(stops or [1, 500, 1000])
@@ -28,6 +29,7 @@ class Tram:
         self.intended_speed = intended_speed
         self.stop_time = stop_time
         self.departure_speed = departure_speed
+        self.loop = loop
         self.message = ""
         self.brakes = False
         self.console = Console(self)
@@ -45,10 +47,14 @@ class Tram:
             return
         index = self.stops.index(self.location)
         step = 1 if self.direction == "North" else -1
-        if index + step not in range(len(self.stops)):
+        next_index = index + step
+        if next_index not in range(len(self.stops)) and self.loop:
+            next_index %= len(self.stops)
+        elif next_index not in range(len(self.stops)):
             self.direction = "South" if step == 1 else "North"
             step *= -1
-        self.location = self.stops[index + step]
+            next_index = index + step
+        self.location = self.stops[next_index]
         self.in_motion = False
         self.current_speed = 0
 
