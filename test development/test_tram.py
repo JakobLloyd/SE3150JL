@@ -40,6 +40,13 @@ def describe_tram():
         tram.close()
         assert tram.door_state == "Locked"
 
+    def it_always_stops_at_a_station():
+        tram = Tram(stops=[1, 500, 1000], location=1)
+        tram.start()
+        tram.move()
+        assert tram.location in tram.stops
+        assert tram.in_motion is False
+
     def it_opens_unlocked_doors():
         tram = Tram()
         tram.door_state = "Unlocked"
