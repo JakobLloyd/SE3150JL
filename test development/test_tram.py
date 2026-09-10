@@ -34,3 +34,9 @@ def describe_tram():
         tram = Tram()
         tram.open()
         assert tram.door_state == "Locked"
+
+    def it_opens_unlocked_doors():
+        tram = Tram()
+        tram.door_state = "Unlocked"
+        tram.open()
+        assert tram.door_state == "Open"
