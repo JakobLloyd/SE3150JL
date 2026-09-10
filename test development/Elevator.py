@@ -17,6 +17,8 @@ class Elevator:
         }
 
     def request(self, floor):
+        if floor not in {1, 2, 3}:
+            raise ValueError("destination must be 1, 2, or 3")
         if floor != self.floor and floor not in self.destinations:
             self.destinations.append(floor)
 
