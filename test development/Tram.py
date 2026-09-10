@@ -10,7 +10,7 @@ class TramFleet:
 
 
 class Tram:
-    def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5, loop=False):
+    def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5, loop=False, current_speed=0):
         if location < 1 or location > 1000:
             raise ValueError("location must be between 1 and 1000")
         self.stops = list(stops) if stops is not None else [1, 500, 1000]
@@ -21,6 +21,7 @@ class Tram:
         self.emergency = False
         self.stop_time = stop_time
         self.loop = loop
+        self.current_speed = current_speed
 
     def start(self):
         self.in_motion = True
@@ -49,6 +50,7 @@ class Tram:
 
     def arrive(self):
         self.in_motion = False
+        self.current_speed = 0
         self.door_state = "Open"
 
     def lock_doors(self):
