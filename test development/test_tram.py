@@ -135,3 +135,8 @@ def describe_tram():
         tram = Tram(current_speed=40, intended_speed=20)
         tram.update_brakes()
         assert tram.brakes is True
+
+    def it_engages_brakes_in_an_emergency():
+        tram = Tram()
+        tram.emergency_stop()
+        assert tram.brakes is True
