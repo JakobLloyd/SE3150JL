@@ -67,3 +67,7 @@ def describe_elevator():
     def it_rejects_a_floor_below_one():
         with pytest.raises(ValueError):
             Elevator().request(0)
+
+    def it_rejects_a_floor_above_three():
+        with pytest.raises(ValueError):
+            Elevator().request(4)
