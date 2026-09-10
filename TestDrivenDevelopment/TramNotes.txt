@@ -29,24 +29,4 @@
 "Operator can use console to manually stop and start the tram"
 "Operator can use console to open/close doors"
 "Operator can rest the system"
-
-
 "Operator can override tram with manual controls, activates emergency"
-
-To Do:
-Handle the removal of a stop
-Handle loops
-Handle multiple trams
-
-
-States:
-In_Mostion: True | False
-Door_State: Open | Closed | locked
-Location: integer 1-1000
-Direction: North | South
-Emergency: True | False
-Message: String
-Reset: True | False
-Current_Speed: 0-100
-Intended_speed: 0-100
-Brakes: True | False
