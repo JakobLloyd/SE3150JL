@@ -145,3 +145,10 @@ def describe_tram():
         tram = Tram()
         tram.begin_reset()
         assert tram.brakes is True
+
+    def it_allows_the_operator_to_start_and_stop_manually():
+        tram = Tram()
+        tram.manual_start()
+        assert tram.in_motion is True
+        tram.manual_stop()
+        assert tram.in_motion is False
