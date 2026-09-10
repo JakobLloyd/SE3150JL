@@ -38,6 +38,10 @@ class Tram:
     def remove_stop(self, stop):
         self.stops.remove(stop)
 
+    def arrive(self):
+        self.in_motion = False
+        self.door_state = "Open"
+
     def move(self):
         if not self.in_motion or self.door_state != "Locked":
             return
