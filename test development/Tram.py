@@ -1,5 +1,5 @@
 class Tram:
-    def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5):
+    def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5, loop=False):
         if location < 1 or location > 1000:
             raise ValueError("location must be between 1 and 1000")
         self.stops = list(stops) if stops is not None else [1, 500, 1000]
@@ -8,6 +8,7 @@ class Tram:
         self.door_state = door_state
         self.in_motion = False
         self.stop_time = stop_time
+        self.loop = loop
 
     def start(self):
         self.in_motion = True
@@ -32,6 +33,10 @@ class Tram:
         index = self.stops.index(self.location)
         if self.direction == "North":
             if index == len(self.stops) - 1:
+                if self.loop:
+                    self.location = self.stops[0]
+                    self.in_motion = False
+                    return
                 self.direction = "South"
                 index -= 1
             else:
