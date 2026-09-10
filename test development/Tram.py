@@ -42,6 +42,10 @@ class Tram:
         self.in_motion = False
         self.door_state = "Open"
 
+    def lock_doors(self):
+        if self.door_state == "Closed":
+            self.door_state = "Locked"
+
     def move(self):
         if not self.in_motion or self.door_state != "Locked":
             return
