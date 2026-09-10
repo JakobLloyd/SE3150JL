@@ -14,7 +14,12 @@ class Tram:
             return
         index = self.stops.index(self.location)
         if self.direction == "North":
-            self.location = self.stops[index + 1]
+            if index == len(self.stops) - 1:
+                self.direction = "South"
+                index -= 1
+            else:
+                index += 1
         else:
-            self.location = self.stops[index - 1]
+            index -= 1
+        self.location = self.stops[index]
         self.in_motion = False
