@@ -74,3 +74,6 @@ class Elevator:
 
     def is_full(self):
         return self.passengers >= self.capacity
+
+    def is_idle(self):
+        return self.direction == "Idle"
