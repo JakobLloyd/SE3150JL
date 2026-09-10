@@ -1,6 +1,6 @@
 import pytest
 
-from Tram import Tram
+from Tram import Tram, TramFleet
 
 
 def describe_tram():
@@ -79,3 +79,12 @@ def describe_tram():
         tram.move()
         assert tram.location == 1
         assert tram.direction == "North"
+
+    def it_registers_and_retrieves_multiple_trams_by_name():
+        fleet = TramFleet()
+        north_tram = Tram(location=1)
+        south_tram = Tram(location=1000)
+        fleet.add("north", north_tram)
+        fleet.add("south", south_tram)
+        assert fleet.get("north") is north_tram
+        assert fleet.get("south") is south_tram
