@@ -71,3 +71,6 @@ class Elevator:
     def reset(self):
         if self.direction == "Idle":
             self.emergency = False
+
+    def is_full(self):
+        return self.passengers >= self.capacity
