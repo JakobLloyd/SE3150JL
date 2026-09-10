@@ -111,6 +111,15 @@ def describe_tram():
         tram.start()
         assert tram.door_state == "Locked"
 
+    def it_moves_to_the_next_station_after_emergency_reset():
+        tram = Tram(stops=[1, 500, 1000], location=500, direction="North")
+        tram.emergency_stop()
+        tram.begin_reset()
+        tram.door_state = "Closed"
+        tram.reset_system()
+        tram.move()
+        assert tram.location == 1000
+
     def it_locks_doors_before_departure():
         tram = Tram(door_state="Closed")
         tram.lock_doors()
