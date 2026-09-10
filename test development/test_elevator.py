@@ -168,3 +168,10 @@ def describe_elevator():
         elevator.emergency = True
         elevator.step()
         assert elevator.floor == 1
+
+    def it_does_not_move_with_open_doors():
+        elevator = Elevator()
+        elevator.open_doors()
+        elevator.request(2)
+        elevator.step()
+        assert elevator.floor == 1
