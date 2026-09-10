@@ -128,3 +128,9 @@ def describe_elevator():
         elevator.emergency_stop()
         elevator.reset()
         assert elevator.emergency is False
+
+    def it_reports_when_full():
+        elevator = Elevator(capacity=2)
+        elevator.open_doors()
+        elevator.board(2)
+        assert elevator.is_full() is True
