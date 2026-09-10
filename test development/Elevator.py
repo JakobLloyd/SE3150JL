@@ -13,4 +13,5 @@ class Elevator:
         }
 
     def request(self, floor):
-        self.destinations.append(floor)
+        if floor != self.floor:
+            self.destinations.append(floor)
