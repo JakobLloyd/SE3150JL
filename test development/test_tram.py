@@ -120,3 +120,8 @@ def describe_tram():
         tram = Tram(current_speed=40)
         tram.arrive()
         assert tram.current_speed == 0
+
+    def it_sets_an_arrival_message():
+        tram = Tram()
+        tram.arrive()
+        assert tram.message == "Arriving at station"
