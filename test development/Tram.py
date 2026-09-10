@@ -16,6 +16,12 @@ class Console:
     def reset(self):
         self._tram.begin_reset()
 
+    def open_doors(self):
+        self._tram.open()
+
+    def close_doors(self):
+        self._tram.close()
+
 
 class Tram:
     def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5, loop=False, current_speed=0, departure_speed=20, intended_speed=0):
