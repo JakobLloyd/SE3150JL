@@ -9,6 +9,14 @@ class TramFleet:
         return self._trams[name]
 
 
+class Console:
+    def __init__(self, tram):
+        self._tram = tram
+
+    def reset(self):
+        self._tram.begin_reset()
+
+
 class Tram:
     def __init__(self, stops=None, location=1, direction="North", door_state="Locked", stop_time=5, loop=False, current_speed=0, departure_speed=20, intended_speed=0):
         if location < 1 or location > 1000:
@@ -25,6 +33,7 @@ class Tram:
         self.departure_speed = departure_speed
         self.intended_speed = intended_speed
         self.brakes = False
+        self.console = Console(self)
         self.message = ""
 
     def start(self):
