@@ -9,6 +9,10 @@ class Tram:
     def start(self):
         self.in_motion = True
 
+    def open(self):
+        if self.door_state != "Locked":
+            self.door_state = "Open"
+
     def move(self):
         if not self.in_motion or self.door_state != "Locked":
             return
