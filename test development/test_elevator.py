@@ -37,3 +37,10 @@ def describe_elevator():
         elevator.request(3)
         elevator.step()
         assert elevator.floor == 2
+
+    def it_stops_at_its_destination():
+        elevator = Elevator()
+        elevator.request(2)
+        elevator.step()
+        assert elevator.floor == 2
+        assert elevator.direction == "Idle"
