@@ -31,3 +31,9 @@ def describe_elevator():
         elevator = Elevator()
         elevator.request(1)
         assert elevator.destinations == []
+
+    def it_moves_up_one_floor_per_step():
+        elevator = Elevator()
+        elevator.request(3)
+        elevator.step()
+        assert elevator.floor == 2
