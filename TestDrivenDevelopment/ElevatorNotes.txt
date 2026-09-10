@@ -1,6 +1,9 @@
 Elevator technical specifications
 
 The building has exactly three floors numbered 1 through 3. The elevator starts at floor 1, idle, with closed doors.
+The elevator starts on floor 1.
+The elevator starts with no passengers.
+The elevator starts with emergency mode disabled.
 The elevator reports its current floor, motion direction, door state, load, and emergency state.
 The elevator accepts a destination only for a valid floor.
 The elevator ignores a destination equal to its current floor.

@@ -1,4 +1,6 @@
 "Calling move() advances the tram exactly ne station and never moves it beyond etier end station"
+"Calling move() from the first station advances north to the next station"
+"Calling move() from the last station advances south to the previous station"
 "When the tram reaches an end station, its direction revorses before its next movement"
 "When the doors are locked, calling open() has no effect"
 "When the doors are locked, calling close() has no effect"
