@@ -24,3 +24,8 @@ def describe_elevator():
         elevator = Elevator()
         elevator.request(3)
         assert elevator.destinations == [3]
+
+    def it_ignores_the_current_floor():
+        elevator = Elevator()
+        elevator.request(1)
+        assert elevator.destinations == []
