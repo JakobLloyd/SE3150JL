@@ -1,0 +1,35 @@
+Elevator technical specifications
+
+The building has exactly three floors numbered 1 through 3. The elevator starts at floor 1, idle, with closed doors.
+The elevator reports its current floor, motion direction, door state, load, and emergency state.
+The elevator accepts a destination only for a valid floor.
+The elevator ignores a destination equal to its current floor.
+The elevator moves one floor per step toward its destination.
+The elevator stops when it reaches its destination.
+The elevator reports Up while moving to a higher floor.
+The elevator reports Down while moving to a lower floor.
+The elevator reports Idle while stopped.
+The elevator opens its doors only while idle.
+The elevator closes its doors before moving.
+The elevator will not move while its doors are open.
+The elevator opens its doors when it reaches a destination.
+The elevator can queue multiple valid destinations.
+The elevator serves queued destinations in request order.
+The elevator ignores duplicate destinations already queued.
+The elevator removes a destination after arriving there.
+The elevator rejects a destination outside floors 1 through 3.
+The elevator accepts a passenger only when doors are open.
+The elevator rejects a passenger when doors are closed.
+The elevator tracks the number of passengers.
+The elevator rejects boarding when capacity would be exceeded.
+The elevator rejects a negative passenger count.
+The elevator allows passengers to leave only when doors are open.
+The elevator cannot move when overloaded.
+The elevator enters emergency mode when its emergency button is pressed.
+Emergency mode stops the elevator immediately.
+Emergency mode opens the doors when the elevator is idle.
+The reset button clears emergency mode while the elevator is stopped.
+The reset button does not clear emergency mode while the elevator is moving.
+The elevator refuses new destinations during emergency mode.
+The elevator can report whether it is full.
+The elevator can report whether it is idle.
