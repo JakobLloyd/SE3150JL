@@ -15,3 +15,10 @@ def describe_tram():
         tram.start()
         tram.move()
         assert tram.location == 500
+
+    def it_reverses_at_the_north_end_before_moving():
+        tram = Tram(stops=[1, 500, 1000], location=1000, direction="North")
+        tram.start()
+        tram.move()
+        assert tram.direction == "South"
+        assert tram.location == 500
