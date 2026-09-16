@@ -22,5 +22,4 @@ def describe_orders():
             order.place_order("flashlight", 2)
 
             mock_deduct.assert_called_once()
-
-
+        #all test should pass

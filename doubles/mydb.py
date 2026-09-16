@@ -21,3 +21,5 @@ class MyDB:
         arr = self.loadStrings()
         arr.append(s)
         self.saveStrings(arr)
+
+#interested in 6 functions or handles
