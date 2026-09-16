@@ -1,0 +1,6 @@
+Interested in 6 functions or handles
+Don't envoke the http server, only the inherited thing
+All test cases need to be tested using doubles
+Need to install sqlite
+python squirrel_server.py to run the squirrel server
+curl to get squirrels and db info
