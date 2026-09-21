@@ -4,3 +4,5 @@ All test cases need to be tested using doubles
 Need to install sqlite
 python squirrel_server.py to run the squirrel server
 curl to get squirrels and db info
+
+Make sure database is empty
