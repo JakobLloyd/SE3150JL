@@ -5,4 +5,19 @@ Need to install sqlite
 python squirrel_server.py to run the squirrel server
 curl to get squirrels and db info
 
+db:
 Make sure database is empty
+Understand the fixtures
+
+squirrel:
+On squirrel we want to mock the http file
+ask on how mock response methods work
+Use fake perameters for the mocks
+describe get squirrel collection
+things get passed as fixtures to the test
+do my own code based on professors mock code
+
+Command line test:
+"""PS C:\Users\jkbbl\OneDrive\Documents\Fall 2026 UT\3150\doubles> curl.exe -X GET https://squirrelserver.onrender.com/squirrels
+[{"id": 1, "name": "kyanne", "size": "small"}, {"id": 2, "name": "bingus", "size": "large"}, {"id": 3, "name": "jeff", "size": "small"}, {"id": 4, "name": "jerry", "size": "large"}]
+PS C:\Users\jkbbl\OneDrive\Documents\Fall 2026 UT\3150\doubles> curl.exe -X POST https://squirrelserver.onrender.com/squirrels"""

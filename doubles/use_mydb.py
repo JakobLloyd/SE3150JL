@@ -1,4 +1,4 @@
-from mydb import MyDB
+'''from mydb import MyDB
 
 MyDB the_database = MyDB("test.db")
 
@@ -7,3 +7,4 @@ phone = "555.555.5555"
 hobby = "rock climbing"
 
 
+'''
