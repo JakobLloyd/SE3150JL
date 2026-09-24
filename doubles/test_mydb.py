@@ -19,6 +19,17 @@ def describe_MyDB():
             db = MyDB("test.db")
             assert db.fname == "test.db"
 
+        def it_does_not_create_database_if_it_already_exists(mocker):
+            mock_isfile = mocker.patch("mydb.os.path.isfile", return_value=True)
+            mock_open = mocker.patch("mydb.open", mocker.mock_open())
+            mock_dump = mocker.patch("mydb.pickle.dump")
+
+            MyDB("test.db")
+
+            mock_isfile.assert_called_once_with("test.db")
+            mock_open.assert_not_called()
+            mock_dump.assert_not_called()
+
         def it_creates_empty_database_if_it_does_not_exist(mocker):
             mock_isfile = mocker.patch("mydb.os.path.isfile", return_value=False)
             mock_save_strings = mocker.patch.object(MyDB, "saveStrings")
