@@ -19,6 +19,15 @@ def describe_MyDB():
             db = MyDB("test.db")
             assert db.fname == "test.db"
 
+        def it_creates_empty_database_if_it_does_not_exist(mocker):
+            mock_isfile = mocker.patch("mydb.os.path.isfile", return_value=False)
+            mock_save_strings = mocker.patch.object(MyDB, "saveStrings")
+
+            MyDB("test.db")
+
+            mock_isfile.assert_called_once_with("test.db")
+            mock_save_strings.assert_called_once_with([])
+
     def describe_loadStrings():
         def it_loads_strings_from_the_database(mocker):
             mocker.patch("mydb.os.path.isfile", return_value=True)
@@ -56,12 +65,3 @@ def describe_MyDB():
 
             mock_load_strings.assert_called_once_with()
             mock_save_strings.assert_called_once_with(["two"])
-
-def it_creates_empty_database_if_it_does_not_exist(mocker):
-    mock_isfile = mocker.patch("mydb.os.path.isfile", return_value=False)
-    mock_save_strings = mocker.patch.object(MyDB, "saveStrings")
-
-    MyDB("test.db")
-
-    mock_isfile.assert_called_once_with("test.db")
-    mock_save_strings.assert_called_once_with([])
