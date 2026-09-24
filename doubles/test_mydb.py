@@ -1,15 +1,15 @@
 import pytest
 import os
 
-from doubles.mydb import MyDB
+from mydb import MyDB
 
 
-
-
-def it_assigns_fname_attrribute_value(mocker):
-    mocker.patch("os.path.isfile", return_value=True)
-    db = MyDB("test.db")
-    assert db.fname == "somefilename"
+def describe_MyDB():
+    def describe_init():
+        def it_assigns_fname_attribute_value(mocker):
+            mocker.patch("mydb.os.path.isfile", return_value=True)
+            db = MyDB("test.db")
+            assert db.fname == "test.db"
 
 def it_creates_empty_database_if_it_does_not_exist(mocker):
     mock_isfile = mocker.patch("os.path.isfile", return_value=False)
