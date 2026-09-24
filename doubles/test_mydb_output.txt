@@ -1,0 +1,25 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\jkbbl\OneDrive\Documents\Fall 2026 UT\3150\doubles
+plugins: describe-3.2.0, mock-3.15.1, spec-6.1.0
+collected 6 items
+
+test_mydb.py:
+
+My DB:
+
+  Init:
+    \u2713 It assigns fname attribute value
+    \u2713 It creates empty database if it does not exist
+
+  Load Strings:
+    \u2713 It loads strings from the database
+
+  Save String:
+    \u2713 It adds a string to the database
+
+  Save Strings:
+    \u2713 It saves strings to the database
+    \u2713 It saves an empty database
+
+============================== 6 passed in 0.03s ==============================
