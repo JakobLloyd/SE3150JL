@@ -63,3 +63,22 @@ def describe_SquirrelServerHandler():
 
             mock_db.return_value.getSquirrel.assert_called_once_with("999")
             request.handle404.assert_called_once_with()
+
+    def describe_handleSquirrelsCreate():
+        def it_creates_a_squirrel_from_form_data(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.getRequestData = mocker.Mock(
+                return_value={"name": "jeff", "size": "small"}
+            )
+            request.send_response = mocker.Mock()
+            request.end_headers = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+
+            request.handleSquirrelsCreate()
+
+            request.getRequestData.assert_called_once_with()
+            mock_db.return_value.createSquirrel.assert_called_once_with(
+                "jeff", "small"
+            )
+            request.send_response.assert_called_once_with(201)
+            request.end_headers.assert_called_once_with()
