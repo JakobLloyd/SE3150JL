@@ -82,3 +82,28 @@ def describe_SquirrelServerHandler():
             )
             request.send_response.assert_called_once_with(201)
             request.end_headers.assert_called_once_with()
+
+    def describe_handleSquirrelsUpdate():
+        def it_updates_an_existing_squirrel_from_form_data(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.getRequestData = mocker.Mock(
+                return_value={"name": "jerry", "size": "large"}
+            )
+            request.send_response = mocker.Mock()
+            request.end_headers = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_db.return_value.getSquirrel.return_value = {
+                "id": 4,
+                "name": "jeff",
+                "size": "small",
+            }
+
+            request.handleSquirrelsUpdate("4")
+
+            mock_db.return_value.getSquirrel.assert_called_once_with("4")
+            request.getRequestData.assert_called_once_with()
+            mock_db.return_value.updateSquirrel.assert_called_once_with(
+                "4", "jerry", "large"
+            )
+            request.send_response.assert_called_once_with(204)
+            request.end_headers.assert_called_once_with()
