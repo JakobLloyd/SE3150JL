@@ -38,6 +38,20 @@ def describe_MyDB():
                 ["one", "two"], mock_open.return_value.__enter__.return_value
             )
 
+    def describe_saveString():
+        def it_adds_a_string_to_the_database(mocker):
+            mocker.patch("mydb.os.path.isfile", return_value=True)
+            db = MyDB("test.db")
+            mock_load_strings = mocker.patch.object(
+                db, "loadStrings", return_value=["one"]
+            )
+            mock_save_strings = mocker.patch.object(db, "saveStrings")
+
+            db.saveString("two")
+
+            mock_load_strings.assert_called_once_with()
+            mock_save_strings.assert_called_once_with(["one", "two"])
+
 def it_creates_empty_database_if_it_does_not_exist(mocker):
     mock_isfile = mocker.patch("mydb.os.path.isfile", return_value=False)
     mock_save_strings = mocker.patch.object(MyDB, "saveStrings")
