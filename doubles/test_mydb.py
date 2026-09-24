@@ -55,6 +55,19 @@ def describe_MyDB():
                 ["one", "two"], mock_open.return_value.__enter__.return_value
             )
 
+        def it_saves_an_empty_database(mocker):
+            mocker.patch("mydb.os.path.isfile", return_value=True)
+            mock_open = mocker.patch("mydb.open", mocker.mock_open())
+            mock_dump = mocker.patch("mydb.pickle.dump")
+            db = MyDB("test.db")
+
+            db.saveStrings([])
+
+            mock_open.assert_called_once_with("test.db", "wb")
+            mock_dump.assert_called_once_with(
+                [], mock_open.return_value.__enter__.return_value
+            )
+
     def describe_saveString():
         def it_adds_a_string_to_the_database(empty_database, mocker):
             db = empty_database
