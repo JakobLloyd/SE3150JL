@@ -4,6 +4,14 @@ import os
 from mydb import MyDB
 
 
+@pytest.fixture
+def empty_database(mocker):
+    mocker.patch("mydb.os.path.isfile", return_value=True)
+    db = MyDB("test.db")
+    mocker.patch.object(db, "loadStrings", return_value=[])
+    return db
+
+
 def describe_MyDB():
     def describe_init():
         def it_assigns_fname_attribute_value(mocker):
@@ -39,18 +47,15 @@ def describe_MyDB():
             )
 
     def describe_saveString():
-        def it_adds_a_string_to_the_database(mocker):
-            mocker.patch("mydb.os.path.isfile", return_value=True)
-            db = MyDB("test.db")
-            mock_load_strings = mocker.patch.object(
-                db, "loadStrings", return_value=["one"]
-            )
+        def it_adds_a_string_to_the_database(empty_database, mocker):
+            db = empty_database
+            mock_load_strings = db.loadStrings
             mock_save_strings = mocker.patch.object(db, "saveStrings")
 
             db.saveString("two")
 
             mock_load_strings.assert_called_once_with()
-            mock_save_strings.assert_called_once_with(["one", "two"])
+            mock_save_strings.assert_called_once_with(["two"])
 
 def it_creates_empty_database_if_it_does_not_exist(mocker):
     mock_isfile = mocker.patch("mydb.os.path.isfile", return_value=False)
