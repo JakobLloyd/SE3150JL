@@ -107,3 +107,17 @@ def describe_SquirrelServerHandler():
             )
             request.send_response.assert_called_once_with(204)
             request.end_headers.assert_called_once_with()
+
+        def it_returns_not_found_when_updating_a_missing_squirrel(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.getRequestData = mocker.Mock()
+            request.handle404 = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_db.return_value.getSquirrel.return_value = None
+
+            request.handleSquirrelsUpdate("999")
+
+            mock_db.return_value.getSquirrel.assert_called_once_with("999")
+            request.handle404.assert_called_once_with()
+            request.getRequestData.assert_not_called()
+            mock_db.return_value.updateSquirrel.assert_not_called()
