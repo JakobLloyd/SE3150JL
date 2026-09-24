@@ -30,6 +30,21 @@ def describe_SquirrelServerHandler():
                 bytes(json.dumps(squirrels), "utf-8")
             )
 
+        def it_returns_an_empty_collection_when_no_squirrels_exist(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.send_response = mocker.Mock()
+            request.send_header = mocker.Mock()
+            request.end_headers = mocker.Mock()
+            request.wfile = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_db.return_value.getSquirrels.return_value = []
+
+            request.handleSquirrelsIndex()
+
+            mock_db.return_value.getSquirrels.assert_called_once_with()
+            request.send_response.assert_called_once_with(200)
+            request.wfile.write.assert_called_once_with(bytes("[]", "utf-8"))
+
     def describe_handleSquirrelsRetrieve():
         def it_returns_a_squirrel_when_it_exists(mocker):
             request = SquirrelServerHandler.__new__(SquirrelServerHandler)
@@ -83,6 +98,21 @@ def describe_SquirrelServerHandler():
             request.send_response.assert_called_once_with(201)
             request.end_headers.assert_called_once_with()
 
+        def it_passes_empty_form_values_to_the_database(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.getRequestData = mocker.Mock(
+                return_value={"name": "", "size": ""}
+            )
+            request.send_response = mocker.Mock()
+            request.end_headers = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+
+            request.handleSquirrelsCreate()
+
+            mock_db.return_value.createSquirrel.assert_called_once_with("", "")
+            request.send_response.assert_called_once_with(201)
+            request.end_headers.assert_called_once_with()
+
     def describe_handleSquirrelsUpdate():
         def it_updates_an_existing_squirrel_from_form_data(mocker):
             request = SquirrelServerHandler.__new__(SquirrelServerHandler)
@@ -121,3 +151,53 @@ def describe_SquirrelServerHandler():
             request.handle404.assert_called_once_with()
             request.getRequestData.assert_not_called()
             mock_db.return_value.updateSquirrel.assert_not_called()
+
+    def describe_handleSquirrelsDelete():
+        def it_deletes_an_existing_squirrel(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.send_response = mocker.Mock()
+            request.end_headers = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_db.return_value.getSquirrel.return_value = {
+                "id": 2,
+                "name": "bingus",
+                "size": "large",
+            }
+
+            request.handleSquirrelsDelete("2")
+
+            mock_db.return_value.getSquirrel.assert_called_once_with("2")
+            mock_db.return_value.deleteSquirrel.assert_called_once_with("2")
+            request.send_response.assert_called_once_with(204)
+            request.end_headers.assert_called_once_with()
+
+        def it_returns_not_found_when_deleting_a_missing_squirrel(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.handle404 = mocker.Mock()
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_db.return_value.getSquirrel.return_value = None
+
+            request.handleSquirrelsDelete("999")
+
+            mock_db.return_value.getSquirrel.assert_called_once_with("999")
+            request.handle404.assert_called_once_with()
+            mock_db.return_value.deleteSquirrel.assert_not_called()
+
+    def describe_handle404():
+        def it_writes_a_not_found_response(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            request.send_response = mocker.Mock()
+            request.send_header = mocker.Mock()
+            request.end_headers = mocker.Mock()
+            request.wfile = mocker.Mock()
+
+            request.handle404()
+
+            request.send_response.assert_called_once_with(404)
+            request.send_header.assert_called_once_with(
+                "Content-Type", "text/plain"
+            )
+            request.end_headers.assert_called_once_with()
+            request.wfile.write.assert_called_once_with(
+                bytes("404 Not Found", "utf-8")
+            )
