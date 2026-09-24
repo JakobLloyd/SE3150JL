@@ -52,3 +52,14 @@ def describe_SquirrelServerHandler():
             request.wfile.write.assert_called_once_with(
                 bytes(json.dumps(squirrel), "utf-8")
             )
+
+        def it_returns_not_found_when_the_squirrel_is_missing(mocker):
+            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
+            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_db.return_value.getSquirrel.return_value = None
+            request.handle404 = mocker.Mock()
+
+            request.handleSquirrelsRetrieve("999")
+
+            mock_db.return_value.getSquirrel.assert_called_once_with("999")
+            request.handle404.assert_called_once_with()
