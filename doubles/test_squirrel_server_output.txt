@@ -1,0 +1,34 @@
+﻿============================= test session starts =============================
+platform win32 -- Python 3.14.2, pytest-9.1.1, pluggy-1.6.0
+rootdir: C:\Users\jkbbl\OneDrive\Documents\Fall 2026 UT\3150\doubles
+plugins: describe-3.2.0, mock-3.15.1, spec-6.1.0
+collected 11 items
+
+test_squirrel_server.py:
+
+Squirrel Server Handler:
+
+  Handle 404:
+    \u2713 It writes a not found response
+
+  Handle Squirrels Create:
+    \u2713 It creates a squirrel from form data
+    \u2713 It passes empty form values to the database
+
+  Handle Squirrels Delete:
+    \u2713 It deletes an existing squirrel
+    \u2713 It returns not found when deleting a missing squirrel
+
+  Handle Squirrels Index:
+    \u2713 It returns the squirrel collection
+    \u2713 It returns an empty collection when no squirrels exist
+
+  Handle Squirrels Retrieve:
+    \u2713 It returns a squirrel when it exists
+    \u2713 It returns not found when the squirrel is missing
+
+  Handle Squirrels Update:
+    \u2713 It updates an existing squirrel from form data
+    \u2713 It returns not found when updating a missing squirrel
+
+============================= 11 passed in 0.06s ==============================
