@@ -133,22 +133,27 @@ def describe_SquirrelServerHandler():
 
     def describe_handleSquirrelsCreate():
         def it_creates_a_squirrel_from_form_data(mocker):
-            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
-            request.getRequestData = mocker.Mock(
-                return_value={"name": "jeff", "size": "small"}
+            mock_wfile = mocker.Mock()
+            request = FakeRequest(
+                mock_wfile,
+                "POST",
+                "/squirrels",
+                body="name=jeff&size=small",
             )
-            request.send_response = mocker.Mock()
-            request.end_headers = mocker.Mock()
-            mock_db = mocker.patch("squirrel_server.SquirrelDB")
-
-            request.handleSquirrelsCreate()
-
-            request.getRequestData.assert_called_once_with()
-            mock_db.return_value.createSquirrel.assert_called_once_with(
-                "jeff", "small"
+            mocker.patch.object(SquirrelServerHandler, "wbufsize", 1)
+            mock_send_response = mocker.patch.object(
+                SquirrelServerHandler, "send_response"
             )
-            request.send_response.assert_called_once_with(201)
-            request.end_headers.assert_called_once_with()
+            mock_end_headers = mocker.patch.object(
+                SquirrelServerHandler, "end_headers"
+            )
+            mock_db = mocker.patch.object(SquirrelDB, "createSquirrel")
+
+            SquirrelServerHandler(request, ("127.0.0.1", 80), None)
+
+            mock_db.assert_called_once_with("jeff", "small")
+            mock_send_response.assert_called_once_with(201)
+            mock_end_headers.assert_called_once_with()
 
         def it_passes_empty_form_values_to_the_database(mocker):
             request = SquirrelServerHandler.__new__(SquirrelServerHandler)
