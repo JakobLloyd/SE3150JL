@@ -172,28 +172,39 @@ def describe_SquirrelServerHandler():
 
     def describe_handleSquirrelsUpdate():
         def it_updates_an_existing_squirrel_from_form_data(mocker):
-            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
-            request.getRequestData = mocker.Mock(
-                return_value={"name": "jerry", "size": "large"}
+            mock_wfile = mocker.Mock()
+            request = FakeRequest(
+                mock_wfile,
+                "PUT",
+                "/squirrels/4",
+                body="name=jerry&size=large",
             )
-            request.send_response = mocker.Mock()
-            request.end_headers = mocker.Mock()
-            mock_db = mocker.patch("squirrel_server.SquirrelDB")
-            mock_db.return_value.getSquirrel.return_value = {
-                "id": 4,
-                "name": "jeff",
-                "size": "small",
-            }
+            mocker.patch.object(SquirrelServerHandler, "wbufsize", 1)
+            mock_send_response = mocker.patch.object(
+                SquirrelServerHandler, "send_response"
+            )
+            mock_end_headers = mocker.patch.object(
+                SquirrelServerHandler, "end_headers"
+            )
+            mock_get_squirrel = mocker.patch.object(
+                SquirrelDB,
+                "getSquirrel",
+                return_value={
+                    "id": 4,
+                    "name": "jeff",
+                    "size": "small",
+                },
+            )
+            mock_update_squirrel = mocker.patch.object(SquirrelDB, "updateSquirrel")
 
-            request.handleSquirrelsUpdate("4")
+            SquirrelServerHandler(request, ("127.0.0.1", 80), None)
 
-            mock_db.return_value.getSquirrel.assert_called_once_with("4")
-            request.getRequestData.assert_called_once_with()
-            mock_db.return_value.updateSquirrel.assert_called_once_with(
+            mock_get_squirrel.assert_called_once_with("4")
+            mock_update_squirrel.assert_called_once_with(
                 "4", "jerry", "large"
             )
-            request.send_response.assert_called_once_with(204)
-            request.end_headers.assert_called_once_with()
+            mock_send_response.assert_called_once_with(204)
+            mock_end_headers.assert_called_once_with()
 
         def it_returns_not_found_when_updating_a_missing_squirrel(mocker):
             request = SquirrelServerHandler.__new__(SquirrelServerHandler)
