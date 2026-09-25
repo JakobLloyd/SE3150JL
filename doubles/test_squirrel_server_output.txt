@@ -13,7 +13,7 @@ Squirrel Server Handler:
 
   Handle Squirrels Create:
     \u2713 It creates a squirrel from form data
-    \u2713 It passes empty form values to the database
+    \u2713 It passes unusual form values to the database
 
   Handle Squirrels Delete:
     \u2713 It deletes an existing squirrel
