@@ -222,22 +222,32 @@ def describe_SquirrelServerHandler():
 
     def describe_handleSquirrelsDelete():
         def it_deletes_an_existing_squirrel(mocker):
-            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
-            request.send_response = mocker.Mock()
-            request.end_headers = mocker.Mock()
-            mock_db = mocker.patch("squirrel_server.SquirrelDB")
-            mock_db.return_value.getSquirrel.return_value = {
-                "id": 2,
-                "name": "bingus",
-                "size": "large",
-            }
+            mock_wfile = mocker.Mock()
+            request = FakeRequest(mock_wfile, "DELETE", "/squirrels/2")
+            mocker.patch.object(SquirrelServerHandler, "wbufsize", 1)
+            mock_send_response = mocker.patch.object(
+                SquirrelServerHandler, "send_response"
+            )
+            mock_end_headers = mocker.patch.object(
+                SquirrelServerHandler, "end_headers"
+            )
+            mock_get_squirrel = mocker.patch.object(
+                SquirrelDB,
+                "getSquirrel",
+                return_value={
+                    "id": 2,
+                    "name": "bingus",
+                    "size": "large",
+                },
+            )
+            mock_delete_squirrel = mocker.patch.object(SquirrelDB, "deleteSquirrel")
 
-            request.handleSquirrelsDelete("2")
+            SquirrelServerHandler(request, ("127.0.0.1", 80), None)
 
-            mock_db.return_value.getSquirrel.assert_called_once_with("2")
-            mock_db.return_value.deleteSquirrel.assert_called_once_with("2")
-            request.send_response.assert_called_once_with(204)
-            request.end_headers.assert_called_once_with()
+            mock_get_squirrel.assert_called_once_with("2")
+            mock_delete_squirrel.assert_called_once_with("2")
+            mock_send_response.assert_called_once_with(204)
+            mock_end_headers.assert_called_once_with()
 
         def it_returns_not_found_when_deleting_a_missing_squirrel(mocker):
             request = SquirrelServerHandler.__new__(SquirrelServerHandler)
