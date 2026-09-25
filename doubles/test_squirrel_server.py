@@ -1,6 +1,7 @@
 import io
 import json
 
+from squirrel_db import SquirrelDB
 from squirrel_server import SquirrelServerHandler
 
 
@@ -36,27 +37,38 @@ class FakeRequest:
 def describe_SquirrelServerHandler():
     def describe_handleSquirrelsIndex():
         def it_returns_the_squirrel_collection(mocker):
-            request = SquirrelServerHandler.__new__(SquirrelServerHandler)
-            request.send_response = mocker.Mock()
-            request.send_header = mocker.Mock()
-            request.end_headers = mocker.Mock()
-            request.wfile = mocker.Mock()
-            mock_db = mocker.patch("squirrel_server.SquirrelDB")
+            mock_wfile = mocker.Mock()
+            request = FakeRequest(mock_wfile, "GET", "/squirrels")
+            mocker.patch.object(SquirrelServerHandler, "wbufsize", 1)
+            mock_send_response = mocker.patch.object(
+                SquirrelServerHandler, "send_response"
+            )
+            mock_send_header = mocker.patch.object(
+                SquirrelServerHandler, "send_header"
+            )
+            mock_end_headers = mocker.patch.object(
+                SquirrelServerHandler, "end_headers"
+            )
+            mock_db = mocker.patch.object(
+                SquirrelDB, "getSquirrels", return_value=[
+                    {"id": 1, "name": "kyanne", "size": "small"},
+                    {"id": 2, "name": "bingus", "size": "large"},
+                ]
+            )
             squirrels = [
                 {"id": 1, "name": "kyanne", "size": "small"},
                 {"id": 2, "name": "bingus", "size": "large"},
             ]
-            mock_db.return_value.getSquirrels.return_value = squirrels
 
-            request.handleSquirrelsIndex()
+            response = SquirrelServerHandler(request, ("127.0.0.1", 80), None)
 
-            mock_db.return_value.getSquirrels.assert_called_once_with()
-            request.send_response.assert_called_once_with(200)
-            request.send_header.assert_called_once_with(
+            mock_db.assert_called_once_with()
+            mock_send_response.assert_called_once_with(200)
+            mock_send_header.assert_called_once_with(
                 "Content-Type", "application/json"
             )
-            request.end_headers.assert_called_once_with()
-            request.wfile.write.assert_called_once_with(
+            mock_end_headers.assert_called_once_with()
+            response.wfile.write.assert_called_once_with(
                 bytes(json.dumps(squirrels), "utf-8")
             )
 
