@@ -1,6 +1,36 @@
+import io
 import json
 
 from squirrel_server import SquirrelServerHandler
+
+
+class FakeRequest:
+    def __init__(self, mock_wfile, method, path, body=None):
+        self._mock_wfile = mock_wfile
+        self._method = method
+        self._path = path
+        self._body = body
+
+    def sendall(self, data):
+        return
+
+    def makefile(self, mode, *args, **kwargs):
+        if mode == "rb":
+            if self._body:
+                headers = "Content-Length: {}\r\n".format(len(self._body))
+                body = self._body
+            else:
+                headers = ""
+                body = ""
+            request = bytes(
+                "{} {} HTTP/1.0\r\n{}\r\n{}".format(
+                    self._method, self._path, headers, body
+                ),
+                "utf-8",
+            )
+            return io.BytesIO(request)
+        if mode == "wb":
+            return self._mock_wfile
 
 
 def describe_SquirrelServerHandler():
