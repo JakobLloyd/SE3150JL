@@ -24,6 +24,10 @@ def describe_squirrel_server():
         conn = sqlite3.connect('squirrel_db.db')
         return conn.cursor()
 
+    @pytest.fixture(autouse=True)
+    def kill_http_server():
+        proc = subprocess.run('ps -ax | grep squirrel_server.py | awk "{print $1}" | xargs kill -9')
+
     @pytest.fixture(autouse=True, scope='session')
     def run_http_server():
         proc = subprocess.Popen([sys.executable, 'squirrel_server.py'])

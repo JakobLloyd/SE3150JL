@@ -1,6 +1,7 @@
 import os.path
 import pickle
 import pytest
+import subprocess
 
 from mydb import MyDB
 
@@ -13,6 +14,12 @@ def nonempty_db():
     with open(DB_FILE, 'wb') as f:
         pickle.dump(['wackadoo', 'test-o-matic'], f)
     return MyDB(DB_FILE)
+
+@pytest.fixture
+def empty_db():
+   with open(DB_FILE, 'wb') as f:
+       pickle.dump([], f)
+   return MyDB(DB_FILE)
 
 @pytest.fixture(autouse=True)
 def cleanup():
@@ -32,7 +39,7 @@ def describe_MyDB():
 
         # instead of checking to see that the create file got called (behavior) 
         # now we'll use an OS function to see if the file actually got created (state)
-        def it_creates_empty_database_if_it_does_not_exist():
+        def it_creates_empty_database_if_it_does_not_exist(empty_db):
             db = MyDB(DB_FILE)
             assert os.path.isfile(DB_FILE)
 
