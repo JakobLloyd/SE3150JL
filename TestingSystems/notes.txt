@@ -1,2 +1,6 @@
 ps -ax | grep squirrel_server.py
 to run 8080: py .\squirrel_server.py
+
+look at anylsis tools and look at what to do for squirrel_server
+Use system testing announcment and identify which methodologies to use
+
