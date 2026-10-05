@@ -1,1 +1,2 @@
 ps -ax | grep squirrel_server.py
+to run 8080: py .\squirrel_server.py
