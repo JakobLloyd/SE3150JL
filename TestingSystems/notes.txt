@@ -4,3 +4,7 @@ to run 8080: py .\squirrel_server.py
 look at anylsis tools and look at what to do for squirrel_server
 Use system testing announcment and identify which methodologies to use
 
+Find descrepencys and note them, do not fix but note and create a test for it
+All test should pass but mistakes should be noted
+#one retrieve takes around 20 different test for example
+
