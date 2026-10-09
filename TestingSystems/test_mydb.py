@@ -1,61 +1,71 @@
-import os.path
+import os
 import pickle
+
 import pytest
-import subprocess
 
 from mydb import MyDB
 
-todo = pytest.mark.skip(reason='todo: pending spec')
-
-DB_FILE = "goofball.db"
 
 @pytest.fixture
-def nonempty_db():
-    with open(DB_FILE, 'wb') as f:
-        pickle.dump(['wackadoo', 'test-o-matic'], f)
-    return MyDB(DB_FILE)
+def db_file(tmp_path):
+    return tmp_path / "goofball.db"
+
 
 @pytest.fixture
-def empty_db():
-   with open(DB_FILE, 'wb') as f:
-       pickle.dump([], f)
-   return MyDB(DB_FILE)
+def nonempty_db(db_file):
+    with open(db_file, "wb") as f:
+        pickle.dump(["wackadoo", "test-o-matic"], f)
+    return MyDB(db_file)
 
-@pytest.fixture(autouse=True)
-def cleanup():
-    # this code runs BEFORE each test case
-    # --nothing yet--
-    yield
-    # this code runs AFTER each test case
-    os.remove(DB_FILE)
+
+@pytest.fixture
+def empty_db(db_file):
+    with open(db_file, "wb") as f:
+        pickle.dump([], f)
+    return MyDB(db_file)
+
 
 def describe_MyDB():
 
     def describe_initializer():
 
-        def it_assigns_fname_attribute_value():
-            db = MyDB(DB_FILE)
-            assert db.fname == DB_FILE
+        def it_assigns_fname_attribute_value(db_file):
+            db = MyDB(db_file)
+            assert db.fname == db_file
 
-        # instead of checking to see that the create file got called (behavior) 
-        # now we'll use an OS function to see if the file actually got created (state)
-        def it_creates_empty_database_if_it_does_not_exist(empty_db):
-            db = MyDB(DB_FILE)
-            assert os.path.isfile(DB_FILE)
+        def it_creates_an_empty_database_if_it_does_not_exist(db_file):
+            MyDB(db_file)
+            with open(db_file, "rb") as f:
+                assert pickle.load(f) == []
 
-        def it_does_not_create_database_if_it_already_exists(nonempty_db):
-            assert os.path.isfile(DB_FILE)
-            with open(DB_FILE, 'rb') as f:
-                assert pickle.load(f) == ['wackadoo', 'test-o-matic']
+        def it_preserves_an_existing_database(nonempty_db, db_file):
+            assert os.path.isfile(db_file)
+            with open(db_file, "rb") as f:
+                assert pickle.load(f) == ["wackadoo", "test-o-matic"]
 
-    @todo
     def describe_loadStrings():
-        pass
 
-    @todo
+        def it_returns_the_strings_from_the_file(nonempty_db):
+            assert nonempty_db.loadStrings() == ["wackadoo", "test-o-matic"]
+
+        def it_returns_an_empty_list_from_an_empty_database(empty_db):
+            assert empty_db.loadStrings() == []
+
     def describe_saveStrings():
-        pass
 
-    @todo
+        def it_replaces_the_persisted_list(nonempty_db, db_file):
+            nonempty_db.saveStrings(["one", "two"])
+            with open(db_file, "rb") as f:
+                assert pickle.load(f) == ["one", "two"]
+
     def describe_saveString():
-        pass
+
+        def it_appends_a_string_to_an_empty_list(empty_db, db_file):
+            empty_db.saveString("first entry")
+            with open(db_file, "rb") as f:
+                assert pickle.load(f) == ["first entry"]
+
+        def it_appends_a_string_to_the_existing_list(nonempty_db, db_file):
+            nonempty_db.saveString("new entry")
+            with open(db_file, "rb") as f:
+                assert pickle.load(f) == ["wackadoo", "test-o-matic", "new entry"]
