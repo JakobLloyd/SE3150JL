@@ -208,3 +208,9 @@ def describe_squirrel_server():
             response = http_client.getresponse()
 
             assert response.getheader('Content-Type') == 'text/plain'
+
+        def it_returns_the_not_found_message(http_client):
+            http_client.request('GET', '/unknown')
+            response = http_client.getresponse()
+
+            assert response.read() == b'404 Not Found'
