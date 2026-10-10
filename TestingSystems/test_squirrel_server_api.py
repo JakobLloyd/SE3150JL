@@ -131,3 +131,80 @@ def describe_squirrel_server():
             body = json.loads(response.read())
 
             assert body == {'id': 1, 'name': 'Chippy', 'size': 'small'}
+
+    def describe_update_squirrel():
+
+        def it_returns_204_status_code_for_a_valid_update(http_client, make_a_squirrel):
+            body = urllib.parse.urlencode({'name': 'Acorn', 'size': 'large'})
+            http_client.request('PUT', '/squirrels/1', body, {'Content-Type': 'application/x-www-form-urlencoded'})
+            response = http_client.getresponse()
+
+            assert response.status == 204
+
+        def it_updates_the_persisted_squirrel(http_client, make_a_squirrel, tmp_path):
+            body = urllib.parse.urlencode({'name': 'Acorn', 'size': 'large'})
+            http_client.request('PUT', '/squirrels/1', body, {'Content-Type': 'application/x-www-form-urlencoded'})
+            response = http_client.getresponse()
+            response.read()
+            conn = sqlite3.connect(tmp_path / 'squirrel_db.db')
+            try:
+                cursor = conn.cursor()
+                cursor.execute('SELECT * FROM squirrels WHERE id = 1')
+                squirrel = cursor.fetchone()
+            finally:
+                conn.close()
+
+            assert squirrel == (1, 'Acorn', 'large')
+
+    def describe_delete_squirrel():
+
+        def it_returns_204_status_code_for_a_valid_delete(http_client, make_a_squirrel):
+            http_client.request('DELETE', '/squirrels/1')
+            response = http_client.getresponse()
+
+            assert response.status == 204
+
+        def it_removes_the_persisted_squirrel(http_client, make_a_squirrel, tmp_path):
+            http_client.request('DELETE', '/squirrels/1')
+            response = http_client.getresponse()
+            response.read()
+            conn = sqlite3.connect(tmp_path / 'squirrel_db.db')
+            try:
+                cursor = conn.cursor()
+                cursor.execute('SELECT * FROM squirrels WHERE id = 1')
+                squirrel = cursor.fetchone()
+            finally:
+                conn.close()
+
+            assert squirrel is None
+
+    def describe_not_found_responses():
+
+        @pytest.mark.parametrize('method, path, body', [
+            ('GET', '/unknown', None),
+            ('GET', '/squirrels/999', None),
+            ('GET', '/squirrels/1/extra', None),
+            ('POST', '/unknown', 'name=Hedgehog&size=small'),
+            ('POST', '/squirrels/1', 'name=Hedgehog&size=small'),
+            ('POST', '/squirrels/1/extra', 'name=Hedgehog&size=small'),
+            ('PUT', '/unknown/1', 'name=Hedgehog&size=small'),
+            ('PUT', '/squirrels', 'name=Hedgehog&size=small'),
+            ('PUT', '/squirrels/999', 'name=Hedgehog&size=small'),
+            ('PUT', '/squirrels/1/extra', 'name=Hedgehog&size=small'),
+            ('DELETE', '/unknown/1', None),
+            ('DELETE', '/squirrels', None),
+            ('DELETE', '/squirrels/999', None),
+            ('DELETE', '/squirrels/1/extra', None),
+        ])
+        def it_returns_404_for_invalid_paths(http_client, method, path, body):
+            headers = {'Content-Type': 'application/x-www-form-urlencoded'} if body is not None else {}
+            http_client.request(method, path, body, headers)
+            response = http_client.getresponse()
+
+            assert response.status == 404
+
+        def it_returns_plain_text_for_not_found(http_client):
+            http_client.request('GET', '/unknown')
+            response = http_client.getresponse()
+
+            assert response.getheader('Content-Type') == 'text/plain'
