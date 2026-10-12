@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Squirreltown</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+  </head>
+  <body>
+    <h1>Welcome to Squirreltown</h1>
+    <div id="squirrel-dialog">
+      <h2 id="dialog-title"></h2>
+      <label>
+        <div>Name:</div>
+        <input type="text" id="squirrel-name-input">
+      </label>
+      <label>
+        <div>Size:</div>
+        <input type="text" id="squirrel-size-input">
+      </label>
+      <div>
+        <button id="save-button" class="fa fa-check"></button>
+        <button id="cancel-button" class="fa fa-close"></button>
+      </div>
+    </div>
+    <button id="add-button" class="fa fa-plus"></button>
+    <ul id="squirrels-list">
+    </ul>
+    <script src="app.js"></script>
+  </body>
+</html>
