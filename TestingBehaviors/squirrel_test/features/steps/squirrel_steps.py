@@ -15,3 +15,7 @@ def get_names(context):
 @given("I open Squirreltown")
 def step_open(context):
     context.behave_driver.get(URL)
+
+@when("I click the add button")
+def step_click_add(context):
+    context.behave_driver.find_element(By.ID, "add-button").click()
