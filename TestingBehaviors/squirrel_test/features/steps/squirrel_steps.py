@@ -11,3 +11,7 @@ def get_rows(context):
 def get_names(context):
     names = context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li .name")
     return [n.text for n in names]
+
+@given("I open Squirreltown")
+def step_open(context):
+    context.behave_driver.get(URL)
