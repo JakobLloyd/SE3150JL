@@ -1,0 +1,11 @@
+is_it_christmas.feature
+Feature: as a person of celebration
+I want to know if its Christmas
+So that I don't forget to celebrate.
+
+
+Scenario: it ain't Christmas today
+When I open the url "isitchristmas.com"
+Then I expect that element "#answer" is visible
+And I expect that element "#answer" contains
+And

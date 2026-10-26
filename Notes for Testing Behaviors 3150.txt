@@ -1,0 +1,6 @@
+Notes for Testing Behaviors 3150:
+
+Docker and Virtual machines;
+
+OS specific code (Applications)-> Hardware specific code (Operating System)-> Hardware (Infrastructure)
+
