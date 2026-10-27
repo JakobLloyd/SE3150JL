@@ -78,3 +78,26 @@ def step_swag_labs_login_button_enabled(context):
         By.CSS_SELECTOR, "[data-test='login-button']"
     )
     assert login_button.is_enabled()
+
+
+@when('I enter "{username}" as my Swag Labs username')
+def step_enter_swag_labs_username(context, username):
+    context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='username']"
+    ).send_keys(username)
+
+
+@then('the Swag Labs username field should contain "{username}"')
+def step_swag_labs_username_contains(context, username):
+    field = context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='username']"
+    )
+    assert field.get_attribute("value") == username
+
+
+@then("the Swag Labs password field should still be empty")
+def step_swag_labs_password_field_still_empty(context):
+    field = context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='password']"
+    )
+    assert field.get_attribute("value") == ""

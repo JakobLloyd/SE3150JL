@@ -47,3 +47,10 @@ Feature: Shopping on Swag Labs
     And the Swag Labs login form should be ready
     And the Swag Labs login fields should be empty
     And the Swag Labs login button should be enabled
+
+  Scenario: Entering a username leaves the password field alone
+    Given I open Swag Labs
+    When I enter "standard_user" as my Swag Labs username
+    Then the Swag Labs username field should contain "standard_user"
+    And the Swag Labs password field should still be empty
+    And the Swag Labs login button should be enabled
