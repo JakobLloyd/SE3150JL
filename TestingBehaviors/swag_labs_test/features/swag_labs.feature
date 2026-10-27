@@ -40,3 +40,10 @@ Feature: Shopping on Swag Labs
     And the Swag Labs login fields should be empty
     And the Swag Labs username field should prompt "Username"
     And the Swag Labs password field should prompt "Password"
+
+  Scenario: The blank login form still lets a customer try
+    Given I open Swag Labs
+    Then the Swag Labs page title should be "Swag Labs"
+    And the Swag Labs login form should be ready
+    And the Swag Labs login fields should be empty
+    And the Swag Labs login button should be enabled

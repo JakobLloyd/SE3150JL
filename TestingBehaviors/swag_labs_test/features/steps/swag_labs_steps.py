@@ -70,3 +70,11 @@ def step_swag_labs_password_prompt(context, prompt):
         By.CSS_SELECTOR, "[data-test='password']"
     )
     assert password.get_attribute("placeholder") == prompt
+
+
+@then("the Swag Labs login button should be enabled")
+def step_swag_labs_login_button_enabled(context):
+    login_button = context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='login-button']"
+    )
+    assert login_button.is_enabled()
