@@ -87,6 +87,23 @@ def step_add_swag_labs_product_to_cart(context, product_name):
     raise AssertionError(f"Swag Labs catalog does not contain {product_name!r}")
 
 
+@when('I remove the Swag Labs product "{product_name}" from my cart')
+def step_remove_swag_labs_product_from_cart(context, product_name):
+    products = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_all_elements_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item']")
+        )
+    )
+    for product in products:
+        name = product.find_element(
+            By.CSS_SELECTOR, "[data-test='inventory-item-name']"
+        )
+        if name.text == product_name:
+            product.find_element(By.TAG_NAME, "button").click()
+            return
+    raise AssertionError(f"Swag Labs catalog does not contain {product_name!r}")
+
+
 @when("I open my Swag Labs cart")
 def step_open_swag_labs_cart(context):
     context.behave_driver.find_element(
@@ -106,6 +123,15 @@ def step_swag_labs_cart_count(context, count):
         )
     )
     assert badge.text == str(count)
+
+
+@then("my Swag Labs cart should be empty")
+def step_swag_labs_cart_empty(context):
+    WebDriverWait(context.behave_driver, 15).until(
+        lambda driver: not driver.find_elements(
+            By.CSS_SELECTOR, "[data-test='shopping-cart-badge']"
+        )
+    )
 
 
 @then('my Swag Labs cart should list "{product_name}"')

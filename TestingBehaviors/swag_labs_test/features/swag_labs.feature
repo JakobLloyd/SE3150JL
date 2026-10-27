@@ -101,3 +101,11 @@ Feature: Shopping on Swag Labs
     And I add the Swag Labs product "Sauce Labs Backpack" to my cart
     And I open my Swag Labs cart
     Then my Swag Labs cart should list "Sauce Labs Backpack"
+
+  Scenario: Changing my mind removes a product from the cart
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
+    And I remove the Swag Labs product "Sauce Labs Backpack" from my cart
+    Then my Swag Labs cart should be empty
+    And the Swag Labs product "Sauce Labs Backpack" should offer "Add to cart"
