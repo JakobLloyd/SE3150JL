@@ -13,3 +13,8 @@ Feature: Shopping on Swag Labs
   Scenario: The login counter is ready for its next customer
     Given I open Swag Labs
     Then the Swag Labs login form should be ready
+
+  Scenario: The login counter survives a page refresh
+    Given I open Swag Labs
+    When I refresh the Swag Labs login page
+    Then the Swag Labs login form should be ready
