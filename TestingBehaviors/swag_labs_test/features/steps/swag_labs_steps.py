@@ -54,3 +54,11 @@ def step_swag_labs_username_prompt(context, prompt):
         By.CSS_SELECTOR, "[data-test='username']"
     )
     assert username.get_attribute("placeholder") == prompt
+
+
+@then("the Swag Labs password field should mask what I type")
+def step_swag_labs_password_field_masks_input(context):
+    password = context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='password']"
+    )
+    assert password.get_attribute("type") == "password"

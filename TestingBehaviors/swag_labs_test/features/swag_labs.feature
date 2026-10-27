@@ -26,3 +26,10 @@ Feature: Shopping on Swag Labs
   Scenario: The username field gives a useful hint
     Given I open Swag Labs
     Then the Swag Labs username field should prompt "Username"
+
+  Scenario: The login page is ready without exposing password entry
+    Given I open Swag Labs
+    Then the Swag Labs page title should be "Swag Labs"
+    And the Swag Labs login form should be ready
+    And the Swag Labs login fields should be empty
+    And the Swag Labs password field should mask what I type
