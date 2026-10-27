@@ -46,3 +46,11 @@ def step_swag_labs_login_fields_empty(context):
     password = driver.find_element(By.CSS_SELECTOR, "[data-test='password']")
     assert username.get_attribute("value") == ""
     assert password.get_attribute("value") == ""
+
+
+@then('the Swag Labs username field should prompt "{prompt}"')
+def step_swag_labs_username_prompt(context, prompt):
+    username = context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='username']"
+    )
+    assert username.get_attribute("placeholder") == prompt

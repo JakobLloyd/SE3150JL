@@ -22,3 +22,7 @@ Feature: Shopping on Swag Labs
   Scenario: A new customer's login details are not filled in
     Given I open Swag Labs
     Then the Swag Labs login fields should be empty
+
+  Scenario: The username field gives a useful hint
+    Given I open Swag Labs
+    Then the Swag Labs username field should prompt "Username"
