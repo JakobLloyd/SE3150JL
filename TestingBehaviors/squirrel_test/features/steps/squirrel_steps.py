@@ -39,3 +39,55 @@ def step_dialog_title(context, text):
 @When("I click the cancel button")
 def step_click_cancel(context):
     context.behave_driver.find_element(By.ID, "cancel-button").click()
+
+def get_rows(context):
+    return context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li")
+
+
+def get_names(context):
+    names = context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li .name")
+    return [n.text for n in names]
+
+
+@when('I add a squirrel named "{name}" with size "{size}"')
+def step_add_squirrel(context, name, size):
+    driver = context.behave_driver
+    driver.find_element(By.ID, "add-button").click()
+    driver.find_element(By.ID, "squirrel-name-input").send_keys(name)
+    driver.find_element(By.ID, "squirrel-size-input").send_keys(size)
+    driver.find_element(By.ID, "save-button").click()
+    time.sleep(1)
+
+
+@when("I click the delete button on the last squirrel")
+def step_click_delete(context):
+    get_rows(context)[-1].find_element(By.CSS_SELECTOR, ".fa-trash").click()
+
+
+@when("I accept the popup")
+def step_accept_popup(context):
+    context.behave_driver.switch_to.alert.accept()
+    time.sleep(1)
+
+
+@then('the popup says "{text}"')
+def step_popup_says(context, text):
+    assert text in context.behave_driver.switch_to.alert.text
+
+
+@then('the squirrel list contains "{name}"')
+def step_list_contains(context, name):
+    for _ in range(30):
+        if name in get_names(context):
+            return
+        time.sleep(0.5)
+    assert False, f"{name} was not in the list"
+
+
+@then('the squirrel list does not contain "{name}"')
+def step_list_missing(context, name):
+    for _ in range(30):
+        if name not in get_names(context):
+            return
+        time.sleep(0.5)
+    assert False, f"{name} was still in the list"

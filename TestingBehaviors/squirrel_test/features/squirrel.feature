@@ -23,3 +23,10 @@ Scenario: Chickening out of adding a squirrel
     And I click the cancel button
     Then the dialog is hidden
 
+Scenario: Sir Nutsalot joins the town and then gets booted
+    When I add a squirrel named "Sir Nutsalot" with size "very large"
+    Then the squirrel list contains "Sir Nutsalot"
+    When I click the delete button on the last squirrel
+    Then the popup says "Are you sure you want to delete Sir Nutsalot?"
+    When I accept the popup
+    Then the squirrel list does not contain "Sir Nutsalot"
