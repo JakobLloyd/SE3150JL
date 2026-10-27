@@ -104,3 +104,17 @@ def step_change_name(context, name):
 def step_click_save(context):
     context.behave_driver.find_element(By.ID, "save-button").click()
     time.sleep(1)
+
+@Given("I open Squirreltown")
+def step_open(context):
+    context.behave_driver.get("http://localhost:8000")
+    time.sleep(1)
+
+@When('I add a squirrel named "{name}" with size "{size}"')
+def step_add_squirrel(context, name, size):
+    context.behave_driver.find_element(By.ID, "add-button").click()
+    context.behave_driver.find_element(By.ID, "squirrel-name-input").send_keys(name)
+    context.behave_driver.find_element(By.ID, "squirrel-size-input").send_keys(size)
+    context.behave_driver.find_element(By.ID, "save-button").click()
+    WebDriverWait(context.behave_driver, 15).until(EC.presence_of_element_located((By.XPATH, f"//li[div='{name}']")))
+    time.sleep(1)
