@@ -59,3 +59,10 @@ Feature: Shopping on Swag Labs
     Given I open Swag Labs
     When I sign in to browse the Swag Labs catalog
     Then the Swag Labs page title should be "Swag Labs"
+
+  Scenario: A customer can take stock of the shop floor
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    Then the Swag Labs catalog should be headed "Products"
+    And the Swag Labs catalog should list 6 products
+    And the Swag Labs catalog should include "Sauce Labs Backpack"

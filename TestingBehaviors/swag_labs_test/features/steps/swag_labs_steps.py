@@ -37,6 +37,35 @@ def step_sign_in_to_swag_labs_catalog(context):
     )
 
 
+@then('the Swag Labs catalog should be headed "{heading}"')
+def step_swag_labs_catalog_heading(context, heading):
+    catalog_heading = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-test='title']"))
+    )
+    assert catalog_heading.text == heading
+
+
+@then("the Swag Labs catalog should list {count:d} products")
+def step_swag_labs_catalog_product_count(context, count):
+    products = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_all_elements_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item']")
+        )
+    )
+    assert len(products) == count
+
+
+@then('the Swag Labs catalog should include "{product_name}"')
+def step_swag_labs_catalog_includes_product(context, product_name):
+    product_names = [
+        item.text
+        for item in context.behave_driver.find_elements(
+            By.CSS_SELECTOR, "[data-test='inventory-item-name']"
+        )
+    ]
+    assert product_name in product_names
+
+
 @then('the Swag Labs page title should be "{title}"')
 def step_swag_labs_page_title(context, title):
     assert context.behave_driver.title == title
