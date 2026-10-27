@@ -126,6 +126,28 @@ def step_continue_shopping_from_swag_labs_cart(context):
     )
 
 
+@when("I begin checkout from my Swag Labs cart")
+def step_begin_swag_labs_checkout(context):
+    context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='checkout']"
+    ).click()
+    WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-test='firstName']"))
+    )
+
+
+@then("Swag Labs should ask for my checkout details")
+def step_swag_labs_checkout_details_form(context):
+    driver = context.behave_driver
+    heading = WebDriverWait(driver, 15).until(
+        EC.visibility_of_element_located((By.CSS_SELECTOR, "[data-test='title']"))
+    )
+    assert heading.text == "Checkout: Your Information"
+    assert driver.find_element(By.CSS_SELECTOR, "[data-test='firstName']").is_displayed()
+    assert driver.find_element(By.CSS_SELECTOR, "[data-test='lastName']").is_displayed()
+    assert driver.find_element(By.CSS_SELECTOR, "[data-test='postalCode']").is_displayed()
+
+
 @then("my Swag Labs cart should contain {count:d} item")
 @then("my Swag Labs cart should contain {count:d} items")
 def step_swag_labs_cart_count(context, count):

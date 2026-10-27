@@ -3,29 +3,47 @@ Feature: Shopping on Swag Labs
   I want to visit Swag Labs
   So that I can see what the shop has in store
 
-  Scenario: The shop welcomes a customer
-    Given I open Swag Labs
-
-  Scenario: The shop identifies itself in the browser
+  Scenario: A new customer finds the shop and a clean login form
     Given I open Swag Labs
     Then the Swag Labs page title should be "Swag Labs"
+    And the Swag Labs login form should be ready
+    And the Swag Labs login fields should be empty
+    And the Swag Labs login button should be enabled
 
-  Scenario: The login counter is ready for its next customer
+  Scenario: The sign-in form labels both details a customer needs
+    Given I open Swag Labs
+    Then the Swag Labs username field should prompt "Username"
+    And the Swag Labs password field should prompt "Password"
+    And the Swag Labs login fields should be empty
+    And the Swag Labs login form should be ready
+
+  Scenario: A customer can check the sign-in controls before starting
     Given I open Swag Labs
     Then the Swag Labs login form should be ready
+    And the Swag Labs page title should be "Swag Labs"
+    And the Swag Labs login button should be enabled
+    And the Swag Labs password field should mask what I type
 
-  Scenario: The login counter survives a page refresh
+  Scenario: Refreshing the sign-in page leaves it ready for another attempt
     Given I open Swag Labs
     When I refresh the Swag Labs login page
     Then the Swag Labs login form should be ready
+    And the Swag Labs login fields should be empty
+    And the Swag Labs login button should be enabled
 
-  Scenario: A new customer's login details are not filled in
+  Scenario: A first-time customer sees empty fields with clear prompts
     Given I open Swag Labs
     Then the Swag Labs login fields should be empty
+    And the Swag Labs username field should prompt "Username"
+    And the Swag Labs password field should prompt "Password"
+    And the Swag Labs password field should mask what I type
 
-  Scenario: The username field gives a useful hint
+  Scenario: The username hint appears before a customer enters any details
     Given I open Swag Labs
     Then the Swag Labs username field should prompt "Username"
+    And the Swag Labs login fields should be empty
+    And the Swag Labs login form should be ready
+    And the Swag Labs login button should be enabled
 
   Scenario: The login page is ready without exposing password entry
     Given I open Swag Labs
@@ -117,3 +135,11 @@ Feature: Shopping on Swag Labs
     And I continue shopping from my Swag Labs cart
     Then the Swag Labs catalog should be headed "Products"
     And the Swag Labs product list should be back
+
+  Scenario: A customer starts checkout with delivery details
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
+    And I open my Swag Labs cart
+    And I begin checkout from my Swag Labs cart
+    Then Swag Labs should ask for my checkout details
