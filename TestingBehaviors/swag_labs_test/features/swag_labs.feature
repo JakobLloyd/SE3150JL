@@ -109,3 +109,11 @@ Feature: Shopping on Swag Labs
     And I remove the Swag Labs product "Sauce Labs Backpack" from my cart
     Then my Swag Labs cart should be empty
     And the Swag Labs product "Sauce Labs Backpack" should offer "Add to cart"
+
+  Scenario: A customer can return to browsing from an empty cart
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I open my Swag Labs cart
+    And I continue shopping from my Swag Labs cart
+    Then the Swag Labs catalog should be headed "Products"
+    And the Swag Labs product list should be back

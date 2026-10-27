@@ -114,6 +114,18 @@ def step_open_swag_labs_cart(context):
     )
 
 
+@when("I continue shopping from my Swag Labs cart")
+def step_continue_shopping_from_swag_labs_cart(context):
+    context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='continue-shopping']"
+    ).click()
+    WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-container']")
+        )
+    )
+
+
 @then("my Swag Labs cart should contain {count:d} item")
 @then("my Swag Labs cart should contain {count:d} items")
 def step_swag_labs_cart_count(context, count):
@@ -132,6 +144,16 @@ def step_swag_labs_cart_empty(context):
             By.CSS_SELECTOR, "[data-test='shopping-cart-badge']"
         )
     )
+
+
+@then("the Swag Labs product list should be back")
+def step_swag_labs_product_list_back(context):
+    products = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_all_elements_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item']")
+        )
+    )
+    assert len(products) == 6
 
 
 @then('my Swag Labs cart should list "{product_name}"')
