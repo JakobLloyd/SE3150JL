@@ -13,3 +13,8 @@ Scenario: The town knows its own name
 Scenario: The secret dialog is hiding
     Then the dialog is hidden
 
+Scenario: Poking the plus button summons the dialog
+    When I click the add button
+    Then the dialog is visible
+    And the dialog title is "Add Squirrel"
+

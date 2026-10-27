@@ -21,3 +21,17 @@ def step_heading(context, text):
 def step_dialog_hidden(context):
     dialog = context.behave_driver.find_element(By.ID, "squirrel-dialog")
     assert dialog.is_displayed() == False
+
+@When("I click the add button")
+def step_click_add(context):
+    context.behave_driver.find_element(By.ID, "add-button").click()
+
+@Then("the dialog is visible")
+def step_dialog_visible(context):
+    dialog = context.behave_driver.find_element(By.ID, "squirrel-dialog")
+    assert dialog.is_displayed() == True
+
+@Then('the dialog title is "{text}"')
+def step_dialog_title(context, text):
+    title = context.behave_driver.find_element(By.ID, "dialog-title")
+    assert title.text == text
