@@ -91,3 +91,8 @@ def step_list_missing(context, name):
             return
         time.sleep(0.5)
     assert False, f"{name} was still in the list"
+
+@when("I dismiss the popup")
+def step_dismiss_popup(context):
+    context.behave_driver.switch_to.alert.dismiss()
+    time.sleep(1)

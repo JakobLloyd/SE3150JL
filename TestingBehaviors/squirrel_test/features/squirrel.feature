@@ -30,3 +30,12 @@ Scenario: Sir Nutsalot joins the town and then gets booted
     Then the popup says "Are you sure you want to delete Sir Nutsalot?"
     When I accept the popup
     Then the squirrel list does not contain "Sir Nutsalot"
+
+Scenario: Saying no to the delete popup saves the squirrel
+    When I add a squirrel named "Plot Armor" with size "tiny"
+    And I click the delete button on the last squirrel
+    And I dismiss the popup
+    Then the squirrel list contains "Plot Armor"
+    When I click the delete button on the last squirrel
+    And I accept the popup
+    Then the squirrel list does not contain "Plot Armor"
