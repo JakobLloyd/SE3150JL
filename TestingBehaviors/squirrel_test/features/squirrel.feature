@@ -58,3 +58,19 @@ Scenario: Edit dialog already knows who you are
     And I click the delete button on the last squirrel
     And I accept the popup
     Then the squirrel list does not contain "Chonky Norris"
+
+Scenario: Gary has an identity crisis
+    When I add a squirrel named "Gary" with size "medium"
+    And I click the edit button on the last squirrel
+    And I change the name to "Gary but evil"
+    And I click the save button
+    Then the squirrel list contains "Gary but evil"
+    And the squirrel list does not contain "Gary"
+    When I click the delete button on the last squirrel
+    And I accept the popup
+    Then the squirrel list does not contain "Gary but evil"
+
+Scenario: Saving a squirrel with no name and no size
+    When I click the add button
+    And I click the save button
+    Then the dialog is visible

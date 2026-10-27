@@ -63,17 +63,14 @@ def step_add_squirrel(context, name, size):
 def step_click_delete(context):
     get_rows(context)[-1].find_element(By.CSS_SELECTOR, ".fa-trash").click()
 
-
 @when("I accept the popup")
 def step_accept_popup(context):
     context.behave_driver.switch_to.alert.accept()
     time.sleep(1)
 
-
 @then('the popup says "{text}"')
 def step_popup_says(context, text):
     assert text in context.behave_driver.switch_to.alert.text
-
 
 @then('the squirrel list contains "{name}"')
 def step_list_contains(context, name):
@@ -82,7 +79,6 @@ def step_list_contains(context, name):
             return
         time.sleep(0.5)
     assert False, f"{name} was not in the list"
-
 
 @then('the squirrel list does not contain "{name}"')
 def step_list_missing(context, name):
@@ -112,9 +108,18 @@ def step_name_box(context, text):
     box = context.behave_driver.find_element(By.ID, "squirrel-name-input")
     assert box.get_attribute("value") == text
 
-
 @then('the size box contains "{text}"')
 def step_size_box(context, text):
     box = context.behave_driver.find_element(By.ID, "squirrel-size-input")
     assert box.get_attribute("value") == text
 
+@when('I change the name to "{name}"')
+def step_change_name(context, name):
+    box = context.behave_driver.find_element(By.ID, "squirrel-name-input")
+    box.clear()
+    box.send_keys(name)
+
+@when("I click the save button")
+def step_click_save(context):
+    context.behave_driver.find_element(By.ID, "save-button").click()
+    time.sleep(1)
