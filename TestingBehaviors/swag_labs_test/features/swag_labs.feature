@@ -33,3 +33,10 @@ Feature: Shopping on Swag Labs
     And the Swag Labs login form should be ready
     And the Swag Labs login fields should be empty
     And the Swag Labs password field should mask what I type
+
+  Scenario: The login fields guide a customer without giving away details
+    Given I open Swag Labs
+    Then the Swag Labs login form should be ready
+    And the Swag Labs login fields should be empty
+    And the Swag Labs username field should prompt "Username"
+    And the Swag Labs password field should prompt "Password"
