@@ -66,3 +66,10 @@ Feature: Shopping on Swag Labs
     Then the Swag Labs catalog should be headed "Products"
     And the Swag Labs catalog should list 6 products
     And the Swag Labs catalog should include "Sauce Labs Backpack"
+
+  Scenario: Sorting helps a bargain hunter find the lowest-priced product
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I sort the Swag Labs catalog from cheapest to priciest
+    Then the first Swag Labs product should be "Sauce Labs Onesie"
+    And the first Swag Labs product should cost "$7.99"

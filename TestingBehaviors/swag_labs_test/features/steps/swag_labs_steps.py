@@ -37,6 +37,34 @@ def step_sign_in_to_swag_labs_catalog(context):
     )
 
 
+@when("I sort the Swag Labs catalog from cheapest to priciest")
+def step_sort_catalog_by_ascending_price(context):
+    sort_menu = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='product-sort-container']")
+        )
+    )
+    Select(sort_menu).select_by_visible_text("Price (low to high)")
+
+
+@then('the first Swag Labs product should be "{product_name}"')
+def step_first_swag_labs_product(context, product_name):
+    first_product = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item-name']")
+        )
+    )
+    assert first_product.text == product_name
+
+
+@then('the first Swag Labs product should cost "{price}"')
+def step_first_swag_labs_product_price(context, price):
+    first_price = context.behave_driver.find_element(
+        By.CSS_SELECTOR, "[data-test='inventory-item-price']"
+    )
+    assert first_price.text == price
+
+
 @then('the Swag Labs catalog should be headed "{heading}"')
 def step_swag_labs_catalog_heading(context, heading):
     catalog_heading = WebDriverWait(context.behave_driver, 15).until(
