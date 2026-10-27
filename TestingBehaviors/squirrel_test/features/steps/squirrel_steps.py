@@ -96,3 +96,8 @@ def step_list_missing(context, name):
 def step_dismiss_popup(context):
     context.behave_driver.switch_to.alert.dismiss()
     time.sleep(1)
+
+@then('the last squirrel has size "{size}"')
+def step_last_size(context, size):
+    last = get_rows(context)[-1]
+    assert last.find_element(By.CSS_SELECTOR, ".size").text == size

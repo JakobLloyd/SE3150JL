@@ -39,3 +39,11 @@ Scenario: Saying no to the delete popup saves the squirrel
     When I click the delete button on the last squirrel
     And I accept the popup
     Then the squirrel list does not contain "Plot Armor"
+
+Scenario: Squirrels remember how big they are
+    When I add a squirrel named "Big Boy" with size "gigantic"
+    Then the last squirrel has size "gigantic"
+    When I click the delete button on the last squirrel
+    And I accept the popup
+    Then the squirrel list does not contain "Big Boy"
+
