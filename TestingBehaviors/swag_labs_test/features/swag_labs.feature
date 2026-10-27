@@ -9,3 +9,7 @@ Feature: Shopping on Swag Labs
   Scenario: The shop identifies itself in the browser
     Given I open Swag Labs
     Then the Swag Labs page title should be "Swag Labs"
+
+  Scenario: The login counter is ready for its next customer
+    Given I open Swag Labs
+    Then the Swag Labs login form should be ready
