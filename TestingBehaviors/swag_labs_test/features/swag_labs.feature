@@ -87,3 +87,10 @@ Feature: Shopping on Swag Labs
     And I add the Swag Labs product "Sauce Labs Backpack" to my cart
     Then my Swag Labs cart should contain 1 item
     And the Swag Labs product "Sauce Labs Backpack" should offer "Remove"
+
+  Scenario: Shopping for two items updates the cart count
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
+    And I add the Swag Labs product "Sauce Labs Bike Light" to my cart
+    Then my Swag Labs cart should contain 2 items
