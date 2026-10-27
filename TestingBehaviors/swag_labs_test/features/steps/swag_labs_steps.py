@@ -70,6 +70,51 @@ def step_inspect_swag_labs_product(context, product_name):
     raise AssertionError(f"Swag Labs catalog does not contain {product_name!r}")
 
 
+@when('I add the Swag Labs product "{product_name}" to my cart')
+def step_add_swag_labs_product_to_cart(context, product_name):
+    products = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_all_elements_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item']")
+        )
+    )
+    for product in products:
+        name = product.find_element(
+            By.CSS_SELECTOR, "[data-test='inventory-item-name']"
+        )
+        if name.text == product_name:
+            product.find_element(By.TAG_NAME, "button").click()
+            return
+    raise AssertionError(f"Swag Labs catalog does not contain {product_name!r}")
+
+
+@then("my Swag Labs cart should contain {count:d} item")
+@then("my Swag Labs cart should contain {count:d} items")
+def step_swag_labs_cart_count(context, count):
+    badge = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='shopping-cart-badge']")
+        )
+    )
+    assert badge.text == str(count)
+
+
+@then('the Swag Labs product "{product_name}" should offer "{button_label}"')
+def step_swag_labs_product_button_label(context, product_name, button_label):
+    products = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_all_elements_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item']")
+        )
+    )
+    for product in products:
+        name = product.find_element(
+            By.CSS_SELECTOR, "[data-test='inventory-item-name']"
+        )
+        if name.text == product_name:
+            assert product.find_element(By.TAG_NAME, "button").text == button_label
+            return
+    raise AssertionError(f"Swag Labs catalog does not contain {product_name!r}")
+
+
 @then('the Swag Labs product details should show "{product_name}"')
 def step_swag_labs_product_details_name(context, product_name):
     details_name = WebDriverWait(context.behave_driver, 15).until(

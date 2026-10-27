@@ -80,3 +80,10 @@ Feature: Shopping on Swag Labs
     And I inspect the Swag Labs product "Sauce Labs Backpack"
     Then the Swag Labs product details should show "Sauce Labs Backpack"
     And the Swag Labs product details should cost "$29.99"
+
+  Scenario: Adding a product marks it for removal and updates the cart
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
+    Then my Swag Labs cart should contain 1 item
+    And the Swag Labs product "Sauce Labs Backpack" should offer "Remove"
