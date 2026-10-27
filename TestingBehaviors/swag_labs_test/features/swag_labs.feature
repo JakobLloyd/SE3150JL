@@ -73,3 +73,10 @@ Feature: Shopping on Swag Labs
     And I sort the Swag Labs catalog from cheapest to priciest
     Then the first Swag Labs product should be "Sauce Labs Onesie"
     And the first Swag Labs product should cost "$7.99"
+
+  Scenario: A customer can inspect a product before buying
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I inspect the Swag Labs product "Sauce Labs Backpack"
+    Then the Swag Labs product details should show "Sauce Labs Backpack"
+    And the Swag Labs product details should cost "$29.99"

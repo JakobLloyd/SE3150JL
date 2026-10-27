@@ -47,6 +47,49 @@ def step_sort_catalog_by_ascending_price(context):
     Select(sort_menu).select_by_visible_text("Price (low to high)")
 
 
+@when('I inspect the Swag Labs product "{product_name}"')
+def step_inspect_swag_labs_product(context, product_name):
+    products = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_all_elements_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item']")
+        )
+    )
+    for product in products:
+        name = product.find_element(
+            By.CSS_SELECTOR, "[data-test='inventory-item-name']"
+        )
+        if name.text == product_name:
+            name.click()
+            WebDriverWait(context.behave_driver, 15).until(
+                EC.text_to_be_present_in_element(
+                    (By.CSS_SELECTOR, "[data-test='inventory-item-name']"),
+                    product_name,
+                )
+            )
+            return
+    raise AssertionError(f"Swag Labs catalog does not contain {product_name!r}")
+
+
+@then('the Swag Labs product details should show "{product_name}"')
+def step_swag_labs_product_details_name(context, product_name):
+    details_name = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item-name']")
+        )
+    )
+    assert details_name.text == product_name
+
+
+@then('the Swag Labs product details should cost "{price}"')
+def step_swag_labs_product_details_price(context, price):
+    details_price = WebDriverWait(context.behave_driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-item-price']")
+        )
+    )
+    assert details_price.text == price
+
+
 @then('the first Swag Labs product should be "{product_name}"')
 def step_first_swag_labs_product(context, product_name):
     first_product = WebDriverWait(context.behave_driver, 15).until(
