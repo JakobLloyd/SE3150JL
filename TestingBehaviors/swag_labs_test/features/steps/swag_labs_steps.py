@@ -20,6 +20,23 @@ def step_refresh_swag_labs_login_page(context):
     )
 
 
+@when("I sign in to browse the Swag Labs catalog")
+def step_sign_in_to_swag_labs_catalog(context):
+    driver = context.behave_driver
+    driver.find_element(By.CSS_SELECTOR, "[data-test='username']").send_keys(
+        "standard_user"
+    )
+    driver.find_element(By.CSS_SELECTOR, "[data-test='password']").send_keys(
+        "secret_sauce"
+    )
+    driver.find_element(By.CSS_SELECTOR, "[data-test='login-button']").click()
+    WebDriverWait(driver, 15).until(
+        EC.visibility_of_element_located(
+            (By.CSS_SELECTOR, "[data-test='inventory-container']")
+        )
+    )
+
+
 @then('the Swag Labs page title should be "{title}"')
 def step_swag_labs_page_title(context, title):
     assert context.behave_driver.title == title

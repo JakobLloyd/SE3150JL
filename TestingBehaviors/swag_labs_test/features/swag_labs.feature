@@ -54,3 +54,8 @@ Feature: Shopping on Swag Labs
     Then the Swag Labs username field should contain "standard_user"
     And the Swag Labs password field should still be empty
     And the Swag Labs login button should be enabled
+
+  Scenario: A customer can enter the Swag Labs shop floor
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    Then the Swag Labs page title should be "Swag Labs"
