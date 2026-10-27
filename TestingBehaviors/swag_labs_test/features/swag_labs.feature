@@ -18,3 +18,7 @@ Feature: Shopping on Swag Labs
     Given I open Swag Labs
     When I refresh the Swag Labs login page
     Then the Swag Labs login form should be ready
+
+  Scenario: A new customer's login details are not filled in
+    Given I open Swag Labs
+    Then the Swag Labs login fields should be empty

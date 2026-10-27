@@ -37,3 +37,12 @@ def step_swag_labs_login_form_ready(context):
     assert driver.find_element(
         By.CSS_SELECTOR, "[data-test='login-button']"
     ).is_displayed()
+
+
+@then("the Swag Labs login fields should be empty")
+def step_swag_labs_login_fields_empty(context):
+    driver = context.behave_driver
+    username = driver.find_element(By.CSS_SELECTOR, "[data-test='username']")
+    password = driver.find_element(By.CSS_SELECTOR, "[data-test='password']")
+    assert username.get_attribute("value") == ""
+    assert password.get_attribute("value") == ""
