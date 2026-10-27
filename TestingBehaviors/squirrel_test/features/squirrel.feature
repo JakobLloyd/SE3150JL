@@ -18,3 +18,8 @@ Scenario: Poking the plus button summons the dialog
     Then the dialog is visible
     And the dialog title is "Add Squirrel"
 
+Scenario: Chickening out of adding a squirrel
+    When I click the add button
+    And I click the cancel button
+    Then the dialog is hidden
+

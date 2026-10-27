@@ -35,3 +35,7 @@ def step_dialog_visible(context):
 def step_dialog_title(context, text):
     title = context.behave_driver.find_element(By.ID, "dialog-title")
     assert title.text == text
+
+@When("I click the cancel button")
+def step_click_cancel(context):
+    context.behave_driver.find_element(By.ID, "cancel-button").click()
