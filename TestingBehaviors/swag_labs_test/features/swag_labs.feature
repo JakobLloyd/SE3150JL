@@ -5,3 +5,7 @@ Feature: Shopping on Swag Labs
 
   Scenario: The shop welcomes a customer
     Given I open Swag Labs
+
+  Scenario: The shop identifies itself in the browser
+    Given I open Swag Labs
+    Then the Swag Labs page title should be "Swag Labs"
