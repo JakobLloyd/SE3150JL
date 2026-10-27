@@ -2,8 +2,8 @@ import time
 from behave import given, when, then
 from selenium.webdriver import *
 from selenium.webdriver.common.by import By
-
-URL = "http://localhost:8000"
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 @Given("I open Squirreltown")
 def step_open(context):
@@ -41,86 +41,66 @@ def step_dialog_title(context, text):
 def step_click_cancel(context):
     context.behave_driver.find_element(By.ID, "cancel-button").click()
 
-def get_rows(context):
-    return context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li")
-
-
-def get_names(context):
-    names = context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li .name")
-    return [n.text for n in names]
-
-
-@when('I add a squirrel named "{name}" with size "{size}"')
+@When('I add a squirrel named "{name}" with size "{size}"')
 def step_add_squirrel(context, name, size):
-    driver = context.behave_driver
-    driver.find_element(By.ID, "add-button").click()
-    driver.find_element(By.ID, "squirrel-name-input").send_keys(name)
-    driver.find_element(By.ID, "squirrel-size-input").send_keys(size)
-    driver.find_element(By.ID, "save-button").click()
-    time.sleep(1)
+    context.behave_driver.find_element(By.ID, "add-button").click()
+    context.behave_driver.find_element(By.ID, "squirrel-name-input").send_keys(name)
+    context.behave_driver.find_element(By.ID, "squirrel-size-input").send_keys(size)
+    context.behave_driver.find_element(By.ID, "save-button").click()
+    WebDriverWait(context.behave_driver, 15).until(EC.presence_of_element_located((By.XPATH, f"//li[div='{name}']")))
 
+@When("I click the delete button on the last squirrel")
+def step_delete_last(context):
+    rows = context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li")
+    rows[-1].find_element(By.CSS_SELECTOR, ".fa-trash").click()
 
-@when("I click the delete button on the last squirrel")
-def step_click_delete(context):
-    get_rows(context)[-1].find_element(By.CSS_SELECTOR, ".fa-trash").click()
-
-@when("I accept the popup")
+@When("I accept the popup")
 def step_accept_popup(context):
     context.behave_driver.switch_to.alert.accept()
-    time.sleep(1)
 
-@then('the popup says "{text}"')
+@Then('the popup says "{text}"')
 def step_popup_says(context, text):
     assert text in context.behave_driver.switch_to.alert.text
 
-@then('the squirrel list contains "{name}"')
-def step_list_contains(context, name):
-    for _ in range(30):
-        if name in get_names(context):
-            return
-        time.sleep(0.5)
-    assert False, f"{name} was not in the list"
+@Then('the squirrel list contains "{name}"')
+def step_list_has(context, name):
+    WebDriverWait(context.behave_driver, 15).until(EC.presence_of_element_located((By.XPATH, f"//li[div='{name}']")))
 
-@then('the squirrel list does not contain "{name}"')
+@Then('the squirrel list does not contain "{name}"')
 def step_list_missing(context, name):
-    for _ in range(30):
-        if name not in get_names(context):
-            return
-        time.sleep(0.5)
-    assert False, f"{name} was still in the list"
+    WebDriverWait(context.behave_driver, 15).until_not(EC.presence_of_element_located((By.XPATH, f"//li[div='{name}']")))
 
-@when("I dismiss the popup")
+@When("I dismiss the popup")
 def step_dismiss_popup(context):
     context.behave_driver.switch_to.alert.dismiss()
-    time.sleep(1)
 
-@then('the last squirrel has size "{size}"')
+@Then('the last squirrel has size "{size}"')
 def step_last_size(context, size):
-    last = get_rows(context)[-1]
-    assert last.find_element(By.CSS_SELECTOR, ".size").text == size
+    rows = context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li")
+    assert rows[-1].find_element(By.CSS_SELECTOR, ".size").text == size
 
-@when("I click the edit button on the last squirrel")
-def step_click_edit(context):
-    get_rows(context)[-1].find_element(By.CSS_SELECTOR, ".fa-pencil").click()
+@When("I click the edit button on the last squirrel")
+def step_edit_last(context):
+    rows = context.behave_driver.find_elements(By.CSS_SELECTOR, "#squirrels-list li")
+    rows[-1].find_element(By.CSS_SELECTOR, ".fa-pencil").click()
 
-
-@then('the name box contains "{text}"')
+@Then('the name box contains "{text}"')
 def step_name_box(context, text):
     box = context.behave_driver.find_element(By.ID, "squirrel-name-input")
     assert box.get_attribute("value") == text
 
-@then('the size box contains "{text}"')
+@Then('the size box contains "{text}"')
 def step_size_box(context, text):
     box = context.behave_driver.find_element(By.ID, "squirrel-size-input")
     assert box.get_attribute("value") == text
 
-@when('I change the name to "{name}"')
+@When('I change the name to "{name}"')
 def step_change_name(context, name):
     box = context.behave_driver.find_element(By.ID, "squirrel-name-input")
     box.clear()
     box.send_keys(name)
 
-@when("I click the save button")
+@When("I click the save button")
 def step_click_save(context):
     context.behave_driver.find_element(By.ID, "save-button").click()
     time.sleep(1)
