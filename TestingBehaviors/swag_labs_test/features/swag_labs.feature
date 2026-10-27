@@ -94,3 +94,10 @@ Feature: Shopping on Swag Labs
     And I add the Swag Labs product "Sauce Labs Backpack" to my cart
     And I add the Swag Labs product "Sauce Labs Bike Light" to my cart
     Then my Swag Labs cart should contain 2 items
+
+  Scenario: The cart remembers which product I picked
+    Given I open Swag Labs
+    When I sign in to browse the Swag Labs catalog
+    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
+    And I open my Swag Labs cart
+    Then my Swag Labs cart should list "Sauce Labs Backpack"
