@@ -47,3 +47,14 @@ Scenario: Squirrels remember how big they are
     And I accept the popup
     Then the squirrel list does not contain "Big Boy"
 
+Scenario: Edit dialog already knows who you are
+    When I add a squirrel named "Chonky Norris" with size "legendary"
+    And I click the edit button on the last squirrel
+    Then the dialog is visible
+    And the dialog title is "Edit Squirrel"
+    And the name box contains "Chonky Norris"
+    And the size box contains "legendary"
+    When I click the cancel button
+    And I click the delete button on the last squirrel
+    And I accept the popup
+    Then the squirrel list does not contain "Chonky Norris"

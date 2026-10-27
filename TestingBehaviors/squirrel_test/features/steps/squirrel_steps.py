@@ -101,3 +101,20 @@ def step_dismiss_popup(context):
 def step_last_size(context, size):
     last = get_rows(context)[-1]
     assert last.find_element(By.CSS_SELECTOR, ".size").text == size
+
+@when("I click the edit button on the last squirrel")
+def step_click_edit(context):
+    get_rows(context)[-1].find_element(By.CSS_SELECTOR, ".fa-pencil").click()
+
+
+@then('the name box contains "{text}"')
+def step_name_box(context, text):
+    box = context.behave_driver.find_element(By.ID, "squirrel-name-input")
+    assert box.get_attribute("value") == text
+
+
+@then('the size box contains "{text}"')
+def step_size_box(context, text):
+    box = context.behave_driver.find_element(By.ID, "squirrel-size-input")
+    assert box.get_attribute("value") == text
+
