@@ -1,0 +1,13 @@
+Notes for Testing continuously:
+Pip install pytest
+unit - test
+pytest -- spec
+
+on push
+	main
+	def unit_test
+	check out code
+	install deps
+	run pytest -- spec
+	check if success
+		email to dev
