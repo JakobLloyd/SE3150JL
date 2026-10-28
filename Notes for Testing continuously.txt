@@ -3,6 +3,7 @@ Pip install pytest
 unit - test
 pytest -- spec
 
+unit test yml example:
 on push
 	main
 	def unit_test
@@ -11,3 +12,21 @@ on push
 	run pytest -- spec
 	check if success
 		email to dev
+
+# .github/workflows/unit-test.yml
+name: Unit Test
+
+on:
+	push:
+		branches: [main]
+		paths:
+			- "units/**"
+		workflow_call:
+
+jobs:
+	run-test:
+		runs-on: ubuntu-latest
+		
+		steps:
+			-name: Checkout repository
+			 uses: actions/checkout@v7

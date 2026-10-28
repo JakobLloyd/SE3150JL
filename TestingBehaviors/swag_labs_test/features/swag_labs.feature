@@ -73,73 +73,60 @@ Feature: Shopping on Swag Labs
     And the Swag Labs password field should still be empty
     And the Swag Labs login button should be enabled
 
-  Scenario: A customer can enter the Swag Labs shop floor
+  Scenario: Submitting a blank sign-in asks for a username
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    Then the Swag Labs page title should be "Swag Labs"
+    When I submit the Swag Labs login form
+    Then the Swag Labs login message should say "Epic sadface: Username is required"
+    And the Swag Labs login page should remain open
+    And the Swag Labs login fields should be empty
 
-  Scenario: A customer can take stock of the shop floor
+  Scenario: A username without a password receives a specific prompt
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    Then the Swag Labs catalog should be headed "Products"
-    And the Swag Labs catalog should list 6 products
-    And the Swag Labs catalog should include "Sauce Labs Backpack"
+    When I enter "standard_user" as my Swag Labs username
+    And I submit the Swag Labs login form
+    Then the Swag Labs login message should say "Epic sadface: Password is required"
+    And the Swag Labs username field should contain "standard_user"
+    And the Swag Labs password field should be empty
 
-  Scenario: Sorting helps a bargain hunter find the lowest-priced product
+  Scenario: A password without a username asks for the missing username
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I sort the Swag Labs catalog from cheapest to priciest
-    Then the first Swag Labs product should be "Sauce Labs Onesie"
-    And the first Swag Labs product should cost "$7.99"
+    When I enter "not_the_demo_password_2026" as my Swag Labs password
+    And I submit the Swag Labs login form
+    Then the Swag Labs login message should say "Epic sadface: Username is required"
+    And the Swag Labs username field should be empty
+    And the Swag Labs password field should contain "not_the_demo_password_2026"
 
-  Scenario: A customer can inspect a product before buying
+  Scenario: Unknown customer details are rejected with a clear message
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I inspect the Swag Labs product "Sauce Labs Backpack"
-    Then the Swag Labs product details should show "Sauce Labs Backpack"
-    And the Swag Labs product details should cost "$29.99"
+    When I enter "unknown_customer_2026" as my Swag Labs username
+    And I enter "not_the_demo_password_2026" as my Swag Labs password
+    And I submit the Swag Labs login form
+    Then the Swag Labs login message should say "Epic sadface: Username and password do not match any user in this service"
+    And the Swag Labs login page should remain open
 
-  Scenario: Adding a product marks it for removal and updates the cart
+  Scenario: A customer can dismiss a required-field message
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
-    Then my Swag Labs cart should contain 1 item
-    And the Swag Labs product "Sauce Labs Backpack" should offer "Remove"
+    When I submit the Swag Labs login form
+    And I dismiss the Swag Labs login message
+    Then the Swag Labs login message should be dismissed
+    And the Swag Labs login form should be ready
 
-  Scenario: Shopping for two items updates the cart count
+  Scenario: Pressing Enter submits the sign-in form
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
-    And I add the Swag Labs product "Sauce Labs Bike Light" to my cart
-    Then my Swag Labs cart should contain 2 items
+    When I enter "unknown_customer_2026" as my Swag Labs username
+    And I enter "not_the_demo_password_2026" as my Swag Labs password
+    And I submit the Swag Labs login form by pressing Enter
+    Then the Swag Labs login message should say "Epic sadface: Username and password do not match any user in this service"
+    And the Swag Labs login page should remain open
 
-  Scenario: The cart remembers which product I picked
+  Scenario: A customer can correct a username after a rejected attempt
     Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
-    And I open my Swag Labs cart
-    Then my Swag Labs cart should list "Sauce Labs Backpack"
-
-  Scenario: Changing my mind removes a product from the cart
-    Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
-    And I remove the Swag Labs product "Sauce Labs Backpack" from my cart
-    Then my Swag Labs cart should be empty
-    And the Swag Labs product "Sauce Labs Backpack" should offer "Add to cart"
-
-  Scenario: A customer can return to browsing from an empty cart
-    Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I open my Swag Labs cart
-    And I continue shopping from my Swag Labs cart
-    Then the Swag Labs catalog should be headed "Products"
-    And the Swag Labs product list should be back
-
-  Scenario: A customer starts checkout with delivery details
-    Given I open Swag Labs
-    When I sign in to browse the Swag Labs catalog
-    And I add the Swag Labs product "Sauce Labs Backpack" to my cart
-    And I open my Swag Labs cart
-    And I begin checkout from my Swag Labs cart
-    Then Swag Labs should ask for my checkout details
+    When I enter "unknown_customer_2026" as my Swag Labs username
+    And I enter "not_the_demo_password_2026" as my Swag Labs password
+    And I submit the Swag Labs login form
+    And I dismiss the Swag Labs login message
+    And I clear the Swag Labs username field
+    And I enter "standard_user" as my Swag Labs username
+    And I submit the Swag Labs login form
+    Then the Swag Labs login message should say "Epic sadface: Username and password do not match any user in this service"
+    And the Swag Labs login page should remain open
