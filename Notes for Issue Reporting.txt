@@ -1,0 +1,27 @@
+Notes for Issue Reporting
+
+Well-formed "characterized" bug reports:
+
+Have a good title
+Clearly outline the problem
+Include detailed steps to re-create the problem
+Include backup information to support your position (do your homework)
+Indicate clearly
+Describe consequences that the user experiences (who is affected?)
+
+You may include pictures, screenshots, diagrams, code-fragments, proposed solutions (add artifacts on GitHub after post)
+
+
+example issue report:
+
+**Title**
+state the outline of the problem.
+**Steps**
+Observe the response, paste the output.
+**Backup Info**
+The specifications and issues in simple steps
+**Severity**
+1-5 on importance 1 is immediately 5 is some other time.
+**Consequences**
+List the consequences and repercussions of the issues.
+
