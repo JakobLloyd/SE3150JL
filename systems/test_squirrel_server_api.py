@@ -147,11 +147,12 @@ def describe_squirrel_server():
             assert [squirrel['id'] for squirrel in json.loads(response.read())] == [1, 2]
 
         @pytest.mark.parametrize('body', ['', 'name=Chippy', 'size=small'])
-        def it_closes_the_connection_when_a_required_field_is_missing(http_client, body):
+        def it_returns_400_when_a_required_field_is_missing(http_client, body):
             http_client.request('POST', '/squirrels', body, {'Content-Type': 'application/x-www-form-urlencoded'})
+            response = http_client.getresponse()
+            response.read()
 
-            with pytest.raises(http.client.RemoteDisconnected):
-                http_client.getresponse()
+            assert response.status == 400
 
     def describe_retrieve_squirrel():
 
