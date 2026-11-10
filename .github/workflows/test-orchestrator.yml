@@ -1,0 +1,17 @@
+name: Test Orchestrator
+
+on:
+  workflow_dispatch:
+
+jobs:
+  unit-tests:
+    uses: ./.github/workflows/unit-tests.yml
+
+  doubles-tests:
+    uses: ./.github/workflows/doubles-tests.yml
+
+  system-tests:
+    uses: ./.github/workflows/system-tests.yml
+
+  behavior-tests:
+    uses: ./.github/workflows/behavior-tests.yml
