@@ -19,7 +19,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install test dependencies
-        run: python -m pip install pytest pytest-describe pytest-mock
+        run: python -m pip install pytest pytest-describe pytest-spec pytest-mock
 
       - name: Run doubles tests
         run: python -m pytest doubles --spec

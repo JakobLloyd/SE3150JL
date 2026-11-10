@@ -19,7 +19,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install test dependencies
-        run: python -m pip install pytest pytest-describe
+        run: python -m pip install pytest pytest-describe pytest-spec
 
       - name: Run system tests
         run: python -m pytest TestingSystems --spec
