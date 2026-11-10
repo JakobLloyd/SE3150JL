@@ -19,14 +19,18 @@ jobs:
           python-version: "3.12"
 
       - name: Set up Chrome
-        uses: browser-actions/setup-chrome@v1
+        id: setup-chrome
+        uses: browser-actions/setup-chrome@v2
         with:
+          chrome-version: stable
           install-chromedriver: true
 
       - name: Install test dependencies
         run: python -m pip install "behave==1.2.6" behave-webdriver "selenium<4" "urllib3<2"
 
       - name: Run behavior tests
+        env:
+          CHROME_BIN: ${{ steps.setup-chrome.outputs.chrome-path }}
         run: |
           (cd TestingBehaviors/squirrel_app && python squirrel_server.py) > /tmp/squirrel-api.log 2>&1 &
           api_pid=$!
